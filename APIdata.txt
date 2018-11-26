@@ -1,0 +1,53 @@
+Teams
+response[“teams”].forEach(team => {
+	console.log(  )
+}
+----------------
+team[“abbreviation”]
+team[“homeVenue”]
+standings[“wins”]
+standings[“losses”]
+standings[“ties”]
+NOT A KEY!  	record - console.log(`${standings[“wins”]} - ${standings[“losses”]} - ${standings[“ties”]`);
+// [isHomeThisWeek]
+divisionRank[“divisionName”]
+divisionRank[“rank“]
+
+Matchups
+response[“games”].forEach(game => {
+	console.log(  )
+}
+------------------
+game.schedule[“homeTeam”][“abbreviation”]
+game.schedule[“awayTeam”][“abbreviation”]
+game.schedule[“startTime”]
+game.schedule[“week”]
+game.score[“homeScoreTotal”]
+game.score[“awayScoreTotal”]
+
+Rosters
+------------------
+player[“jerseyNumber”]
+player[“firstName”] player[“lastName“] NOT A KEY! 
+	fullName - console.log(`${player[“firstName”]} ${player[“lastName“] }`);
+player[“currentTeam”]
+player[“position”]
+player[“height”]
+player[“weight”]
+player[“age”]
+
+
+Articles
+------------------
+-   NFL Page (7 needed)
+picture
+	article.title
+	article.url
+	article.urlToImage
+- Team Page (Pull 20)
+	article.source.name
+	article.publishedAt
+	article.url
+	article.urlToImage
+	article.title
+	article.description
