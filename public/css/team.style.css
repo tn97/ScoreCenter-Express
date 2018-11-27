@@ -171,7 +171,7 @@ textarea {
 
 .jumbotron {
   padding: 0;
-  max-height: 300px;
+  max-height: 350px;
   overflow: hidden;
   position: relative;
   margin: 0;
@@ -192,12 +192,21 @@ p {
 
 .jumbo-image {
   width: 100%;
-  opacity: 0.8;
+  opacity: 0.9;
 }
 
 .jumbo-subtitle {
+  font-size: 70px;
+  letter-spacing: 20px;
+  font-weight: 500;
+}
+
+.main-title {
+  letter-spacing: 75px;
+  font-weight: 500;
   font-size: 60px;
-  letter-spacing: 5px;
+  display: block;
+  margin-left: 30px;
 }
 
 .overlay {
@@ -208,11 +217,12 @@ p {
   font-size: 100px;
   white-space: nowrap;
   text-shadow:
-  -2px -2px 0 white,
-  2px -2px 0 white,
-  -2px 2px 0 white,
-  2px 2px 0 white;
+  -3px -3px 0 white,
+  3px -3px 0 white,
+  -3px 3px 0 white,
+  3px 3px 0 white;
 }
+
 
 
 
