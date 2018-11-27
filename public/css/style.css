@@ -2,6 +2,7 @@ body {
   /* font-family: 'Raleway', sans-serif; */
   font-family: 'Orbitron', sans-serif;
   color: #504949 !important;
+
 }
 
 .container {
@@ -389,7 +390,8 @@ height: 150px;
 color: black;
 font-size: 20px;
 letter-spacing: 2px;
-/* font-weight: bold; */
+font-family: 'Raleway', sans-serif;
+font-weight: 500;
 padding: 0;
 }
 
