@@ -1,6 +1,7 @@
 body {
   /* font-family: 'Raleway', sans-serif; */
   font-family: 'Orbitron', sans-serif;
+  color: #504949 !important;
 }
 
 .container {
@@ -17,7 +18,7 @@ body {
 }
 
 .chat-div {
-  height: 400px;
+  height: 300px;
   width: 100%;
   background: white;
   border: 2px solid rgb(183, 183, 183);
@@ -171,7 +172,7 @@ textarea {
 
 .jumbotron {
   padding: 0;
-  max-height: 300px;
+  max-height: 350px;
   overflow: hidden;
   position: relative;
   margin: 0;
@@ -196,8 +197,18 @@ p {
 }
 
 .jumbo-subtitle {
+  font-size: 70px;
+  letter-spacing: 20px;
+  font-weight: 500;
+}
+
+.main-title {
+  letter-spacing: 90px;
+  font-weight: 500;
   font-size: 60px;
-  letter-spacing: 5px;
+  display: block;
+  color: #1482c5 !important;
+  margin-left: 30px;
 }
 
 .overlay {
@@ -208,10 +219,10 @@ p {
   font-size: 100px;
   white-space: nowrap;
   text-shadow:
-  -2px -2px 0 white,
-  2px -2px 0 white,
-  -2px 2px 0 white,
-  2px 2px 0 white;
+  -3px -3px 0 white,
+  3px -3px 0 white,
+  -3px 3px 0 white,
+  3px 3px 0 white;
 }
 
 
@@ -541,8 +552,7 @@ h4 {
 }
 
 .chat-container {
-  width: 75%; 
-
+  width: 90%;
 }
 
 input {
