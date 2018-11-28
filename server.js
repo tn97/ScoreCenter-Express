@@ -88,27 +88,35 @@ app.get("/api/news/:team", function (req, res) {
 })
 
 app.get("/api/roster/:team", function (req, res) {
+
+  console.log(req.params.team)
+
 // Reads the file that gets created with the data called from the API
 fs.readFile('results/players-nfl-2018-2019-regular.json', 'utf8', function (err, data) {
   if (err) throw err;
-  JSON.parse(data, null, 2).players.forEach((player, i) => {
-
-
-
-
-    const playerData = {
-      "jerseyNumber": player.player.jerseyNumber,
-      "firstName": player.player.firstName,
-      "lastName": player.player.lastName,
-      "primaryPosition": player.player.primaryPosition,
-      "height": player.player.height,
-      "weight": player.player.weight,
-      "age": player.player.age,
-
-    } 
-    res.json(playerData);
-    // playerData.forEach(player => console.log(isNullOrZero(player)));
-  })
+  // const filteredData = 
+  console.log(JSON.parse(data, null, 2).players[0])
+    // console.log(player)
+    // == req.params.team;
+  // })
+  
+  // console.log(filteredData)
+  
+  
+  // .filter(player => {
+  
+  //   const playerData = {
+  //     "jerseyNumber": player.player.jerseyNumber,
+  //     "firstName": player.player.firstName,
+  //     "lastName": player.player.lastName,
+  //     "primaryPosition": player.player.primaryPosition,
+  //     "height": player.player.height,
+  //     "weight": player.player.weight,
+  //     "age": player.player.age,
+  //   } 
+  //   // res.json(playerData);
+  //   // playerData.forEach(player => console.log(isNullOrZero(player)));
+  // })
 });
 
 

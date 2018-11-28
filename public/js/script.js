@@ -7,224 +7,256 @@ const teamData = {
     primary: "#97233F",
     secondary: "#000000",
     city: "arizona",
-    name: "cardinals"
+    name: "cardinals",
+    abbr: "ARI"
   },
 
   falcons: {
     primary: "#A71930",
     secondary: "#000000",
     city: "atlanta",
-    name: "falcons"
+    name: "falcons",
+    abbr: "ATL"
   },
   
   ravens: {
     primary: "#241773",
     secondary: "#000000",
     city: "baltimore",
-    name: "ravens"
+    name: "ravens",
+    abbr: "BAL"
   },
   
   bills: {
     primary: "#00338D",
     secondary: "#C60C30",
     city: "buffalo",
-    name: "bills"
+    name: "bills",
+    abbr: "BUF"
   },
   
   panthers: {
     primary: "#0085CA",
     secondary: "#101820",
     city: "carolina",
-    name: "panthers"
+    name: "panthers",
+    abbr: "CAR"
   },
   
   bears: {
     primary: "#0B162A",
     secondary: "#C83803",
     city: "chicago",
-    name: "bears"
+    name: "bears",
+    abbr: "CHI"
   },
   
   bengals: {
     primary: "#FB4F14",
     secondary: "#000000",
     city: "cincinnati",
-    name: "bengals"
+    name: "bengals",
+    abbr: "CIN"
   },
   
   browns: {
     primary: "#311D00",
     secondary: "#FF3C00",
     city: "cleveland",
-    name: "browns"
+    name: "browns",
+    abbr: "CLE"
   },
   
   cowboys: {
     primary: "#003594",
     secondary: "#041E42",
     city: "dallas",
-    name: "cowboys"
+    name: "cowboys",
+    abbr: "DAL"
   },
   
   broncos: {
     primary: "#FB4F14",
     secondary: "#002244",
     city: "denver",
-    name: "broncos"
+    name: "broncos",
+    abbr: "DEN"
   },
   
   lions: {
     primary: "#0076B6",
     secondary: "#B0B7BC",
     city: "detroit",
-    name: "lions"
+    name: "lions",
+    abbr: "DET"
   },
   
   packers: {
     primary: "#203731",
     secondary: "#FFB612",
     city: "green bay",
-    name: "packers"
+    name: "packers",
+    abbr: "GB"
   },
   
   texans: {
     primary: "#03202F",
     secondary: "#A71930",
     city: "houston",
-    name: "texans"
+    name: "texans",
+    abbr: "HOU"
   },
   
   colts: {
     primary: "#002C5F",
     secondary: "#A2AAAD",
     city: "indianapolis",
-    name: "colts"
+    name: "colts",
+    abbr: "IND"
   },
   
   jaguars: {
     primary: "#101820",
     secondary: "#D7A22A",
     city: "jacksonville",
-    name: "jaguars"
+    name: "jaguars",
+    abbr: "JAX"
   },
   
   chiefs: {
     primary: "#E31837",
     secondary: "#FFB81C",
     city: "kansas city",
-    name: "chiefs"
+    name: "chiefs",
+    abbr: "KC"
   },
   
   chargers: {
     primary: "#002A5E",
     secondary: "#FFC20E",
     city: "los angeles",
-    name: "chargers"
+    name: "chargers",
+    abbr: "LAC"
   },
   
   rams: {
     primary: "#002244",
     secondary: "#866D4B",
     city: "los angeles",
-    name: "rams"
+    name: "rams",
+    abbr: "LA"
   },
   
   dolphins: {
     primary: "#008E97",
     secondary: "#F26A24",
     city: "miami",
-    name: "dolphins"
+    name: "dolphins",
+    abbr: "MIA"
   },
   
   vikings: {
     primary: "#4F2683",
     secondary: "#FFC62F",
     city: "minnesota",
-    name: "vikings"
+    name: "vikings",
+    abbr: "MIN"
   },
   
   patriots: {
     primary: "#002244",
     secondary: "#C60C30",
     city: "new england",
-    name: "patriots"
+    name: "patriots",
+    abbr: "NE"
   },
   
   saints: {
     primary: "#D3BC8D",
     secondary: "#101820",
     city: "new orleans",
-    name: "saints"
+    name: "saints",
+    abbr: "NO"
   },
   
   giants: {
     primary: "#0B2265",
     secondary: "#A71930",
     city: "new york",
-    name: "giants"
+    name: "giants",
+    abbr: "NYG"
   },
  
   jets: {
     primary: "#003F2D",
     secondary: "#FFFFFF",
     city: "new york",
-    name: "jets"
+    name: "jets",
+    abbr: "NYJ"
   },
 
   raiders: {
     primary: "#000000",
     secondary: "#A5ACAF",
     city: "oakland",
-    name: "raiders"
+    name: "raiders",
+    abbr: "OAK"
   },
 
   eagles: {
     primary: "#004C54",
     secondary: "#A5ACAF",
     city: "philadelphia",
-    name: "eagles"
+    name: "eagles",
+    abbr: "PHI"
   },
 
   steelers: {
     primary: "#FFB612",
     secondary: "#101820",
     city: "pittsburgh",
-    name: "steelers"
+    name: "steelers",
+    abbr: "PIT"
   },
 
   niners: {
     primary: "#AA0000",
     secondary: "#B3995D",
     city: "san francisco",
-    name: "49ers"
+    name: "49ers",
+    abbr: "SF"
   },
 
   seahawks: {
     primary: "#002244",
     secondary: "#69BE28",
     city: "seattle",
-    name: "seahawks"
+    name: "seahawks",
+    abbr: "SEA"
   },
 
   buccaneers: {
     primary: "#D50A0A",
     secondary: "#FF7900",
     city: "tampa bay",
-    name: "buccaneers"
+    name: "buccaneers",
+    abbr: "TB"
   },
 
   titans: {
     primary: "#002A5C",
     secondary: "#4495D1",
     city: "tennessee",
-    name: "titans"
+    name: "titans",
+    abbr: "TEN"
   },
 
   redskins: {
     primary: "#773141",
     secondary: "#FFB612",
     city: "washington",
-    name: "redskins"
+    name: "redskins",
+    abbr: "WAS"
   }
 }
 
@@ -319,8 +351,11 @@ const teamData = {
 
 
 const setRoster = () => {
+
+  const teamAbbr = teamData[team].abbr;
+
   $.ajax({
-    url: "/api/roster/" + teamName,
+    url: "/api/roster/" + teamAbbr,
     method: "GET"
   }).then(function(data) {
     console.log(data)
