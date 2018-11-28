@@ -92,6 +92,10 @@ app.get("/api/roster/:team", function (req, res) {
 fs.readFile('results/players-nfl-2018-2019-regular.json', 'utf8', function (err, data) {
   if (err) throw err;
   JSON.parse(data, null, 2).players.forEach((player, i) => {
+
+
+
+
     const playerData = {
       "jerseyNumber": player.player.jerseyNumber,
       "firstName": player.player.firstName,
@@ -99,12 +103,20 @@ fs.readFile('results/players-nfl-2018-2019-regular.json', 'utf8', function (err,
       "primaryPosition": player.player.primaryPosition,
       "height": player.player.height,
       "weight": player.player.weight,
-      "age": player.player.age
+      "age": player.player.age,
+
     } 
     res.json(playerData);
     // playerData.forEach(player => console.log(isNullOrZero(player)));
   })
 });
+
+
+// "player"."teamAsOfDate":{
+//   "id":67,
+//   "abbreviation":"TEN"
+  // }
+
 
 })
 
