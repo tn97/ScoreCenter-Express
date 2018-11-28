@@ -2,7 +2,7 @@ var router = require("express").Router();
 var path = require("path");
 
 router.get("/", function(req, res) {
-  res.sendFile(path.join(__dirname, "../public/home.html"));
+  res.sendFile(path.join(__dirname, "../public/login.html"));
 });
 
 // Render .html at the "/signup" path
@@ -26,6 +26,10 @@ router.get("/fanposts", function(req, res) {
 
 router.get("/team", function(req, res) {
   res.sendFile(path.join(__dirname, "../public/team.html"));
+});
+
+router.get("/home", function(req, res) {
+  res.sendFile(path.join(__dirname, "../public/home.html"));
 });
 
 // All other paths serve the home.html page
