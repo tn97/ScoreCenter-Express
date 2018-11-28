@@ -1,3 +1,4 @@
+
 //variable for url to get team name
 const url = location.href.split("/");
 const team = url[url.length - 1]
@@ -15,154 +16,154 @@ const teamData = {
     city: "atlanta",
     name: "falcons"
   },
-
+  
   ravens: {
     primary: "#241773",
     secondary: "#000000",
     city: "baltimore",
     name: "ravens"
   },
-
+  
   bills: {
     primary: "#00338D",
     secondary: "#C60C30",
     city: "buffalo",
     name: "bills"
   },
-
+  
   panthers: {
     primary: "#0085CA",
     secondary: "#101820",
     city: "carolina",
     name: "panthers"
   },
-
+  
   bears: {
     primary: "#0B162A",
     secondary: "#C83803",
     city: "chicago",
     name: "bears"
   },
-
+  
   bengals: {
     primary: "#FB4F14",
     secondary: "#000000",
     city: "cincinnati",
     name: "bengals"
   },
-
+  
   browns: {
     primary: "#311D00",
     secondary: "#FF3C00",
     city: "cleveland",
     name: "browns"
   },
-
+  
   cowboys: {
     primary: "#003594",
     secondary: "#041E42",
     city: "dallas",
     name: "cowboys"
   },
-
+  
   broncos: {
     primary: "#FB4F14",
     secondary: "#002244",
     city: "denver",
     name: "broncos"
   },
-
+  
   lions: {
     primary: "#0076B6",
     secondary: "#B0B7BC",
     city: "detroit",
     name: "lions"
   },
-
+  
   packers: {
     primary: "#203731",
     secondary: "#FFB612",
     city: "green bay",
     name: "packers"
   },
-
+  
   texans: {
     primary: "#03202F",
     secondary: "#A71930",
     city: "houston",
     name: "texans"
   },
-
+  
   colts: {
     primary: "#002C5F",
     secondary: "#A2AAAD",
     city: "indianapolis",
     name: "colts"
   },
-
+  
   jaguars: {
     primary: "#101820",
     secondary: "#D7A22A",
     city: "jacksonville",
     name: "jaguars"
   },
-
+  
   chiefs: {
     primary: "#E31837",
     secondary: "#FFB81C",
     city: "kansas city",
     name: "chiefs"
   },
-
+  
   chargers: {
     primary: "#002A5E",
     secondary: "#FFC20E",
     city: "los angeles",
     name: "chargers"
   },
-
+  
   rams: {
     primary: "#002244",
     secondary: "#866D4B",
     city: "los angeles",
     name: "rams"
   },
-
+  
   dolphins: {
     primary: "#008E97",
     secondary: "#F26A24",
     city: "miami",
     name: "dolphins"
   },
-
+  
   vikings: {
     primary: "#4F2683",
     secondary: "#FFC62F",
     city: "minnesota",
     name: "vikings"
   },
-
+  
   patriots: {
     primary: "#002244",
     secondary: "#C60C30",
     city: "new england",
     name: "patriots"
   },
-
+  
   saints: {
     primary: "#D3BC8D",
     secondary: "#101820",
     city: "new orleans",
     name: "saints"
   },
-
+  
   giants: {
     primary: "#0B2265",
     secondary: "#A71930",
     city: "new york",
     name: "giants"
   },
-
+ 
   jets: {
     primary: "#003F2D",
     secondary: "#FFFFFF",
@@ -215,7 +216,7 @@ const teamData = {
   titans: {
     primary: "#002A5C",
     secondary: "#4495D1",
-    city: "tennesee",
+    city: "tennessee",
     name: "titans"
   },
 
@@ -227,106 +228,103 @@ const teamData = {
   }
 }
 
+// const setTeamPage = () => {
 
 
+//   //variable for the root class set for CSS Variables
+//   const root = document.querySelector(':root');
 
-console.log("Hello World")
-console.log(team)
+//   //assign and set primary and secondary colors from teamData object based on team
+//   const $primaryColor = teamData[team].primary;
+//   const $secondaryColor = teamData[team].secondary;
+//   root.style.setProperty('--primary-color', $primaryColor)
+//   root.style.setProperty('--secondary-color', $secondaryColor)
 
-// const rootStyles = getComputedStyle(root);
-// const primaryColor = rootStyles.getPropertyValue('--primary-color');
-// const secondaryColor = rootStyles.getPropertyValue('--secondary-color');
+//   //changing image based on team
+//   const $jumboImage = `/photos/$${team}.png`
+//   $(".jumbo-image").attr("src", $jumboImage);
 
-
-
-
-
-
-
-
-
-
-
-
-const setTeamPage = () => {
+//   $("#teamCity").text(teamData[team].city.toUpperCase())
+//   $("#teamName").text(teamData[team].name.toUpperCase())
+// }
 
 
-  //variable for the root class set for CSS Variables
-  const root = document.querySelector(':root');
-
-  //assign and set primary and secondary colors from teamData object based on team
-  const $primaryColor = teamData[team].primary;
-  const $secondaryColor = teamData[team].secondary;
-  root.style.setProperty('--primary-color', $primaryColor)
-  root.style.setProperty('--secondary-color', $secondaryColor)
-
-  //changing image based on team
-  const $jumboImage = `/photos/$${team}.png`
-  $(".jumbo-image").attr("src", $jumboImage);
-
-  $("#teamCity").text(teamData[team].city.toUpperCase())
-  $("#teamName").text(teamData[team].name.toUpperCase())
-}
-setTeamPage();
+// setTeamPage();
 
 
+// const setTeamNews = () => {
 
+//   const teamName = teamData[team].city + " " + teamData[team].name;
+//   $.ajax({
+//     url: "/api/news/" + teamName,
+//     method: "GET"
+//   }).then(function (data) {
 
-const setTeamNews = () => {
+//     // console.log(data.articles)
 
-  const teamName = teamData[team].city + " " + teamData[team].name;
-  $.ajax({
-    url: "/api/news/" + teamName,
-    method: "GET"
-  }).then(function (data) {
+//    data.articles.forEach(article => {
+//       // console.log(article)
+//     })
 
-    const teamNewsArray = [];
+//     const teamProper = team.charAt(0).toUpperCase() + team.slice(1);
 
-    data.articles.forEach((article) => {
-      if (article.title.includes(teamData[team].name.charAt(0).toUpperCase()) && article.urlToImage) {
-        teamNewsArray.push(
-          {
-            "title": article.title,
-            "url": article.url,
-            "imgUrl":article.urlToImage
-          }
-        )
+//     const filteredArticles = data.articles.filter(article => {
+//       // return article.title.includes(teamProper) && article.urlToImage && article.source.id !== "bleacher-report" && article.source.id !== "usa-today";
+//       // return article.description.includes(teamProper) && article.source.name !== "Nownews.com" && article.source.name !== "USA Today";
+//       return (article.description.includes(teamProper) || article.title.includes(teamProper)) && article.urlToImage && article.source.name !== "Nownews.com";
+//     })
+
+//     console.log(filteredArticles)
+
+//     const teamNewsArray = [];
+
+//     filteredArticles.forEach((article) => {
+      
+//         teamNewsArray.push(
+//           {
+//             "title": article.title,
+//             "url": article.url,
+//             "urlToImage": article.urlToImage,
+//             "source": article.source.name,
+//             "description": article.description
+//           });
+//         })
         
-
-
-    // if ($(".article-pic-left")[index]) {
-
-    //   $(".article-pic-left")[index].src = article.urlToImage;
-    // }
-
-    // const articleData = [article.title, article.url, article.urlToImage];
-
-  }
-});
-console.log(teamNewsArray)
-
-console.log($(".text"))
-
-        for (let x = 0; x < $(".article-pic-left").length; x++) {
-          $(".article-pic-left")[x].src = teamNewsArray[x].imgUrl;
-          $(".text")[x].innerText = teamNewsArray[x].title;
-        }
+      
 
 
 
+//     // console.log(teamNewsArray)
 
 
+
+//     for (let x = 0; x < $(".article-pic-left").length; x++) {
+//       $(".text")[x].innerText = teamNewsArray[x].title;
+//       $(".article-pic-left")[x].src = teamNewsArray[x].urlToImage;
+//     }
+
+//     $(".article-pic-left").on("error", function() {
+//       $(this).attr('src', `/photos/$${team}.png`);
+//     });
+
+
+
+      
+//   })
+
+
+// }
+
+// setTeamNews();
+
+
+const setRoster = () => {
+  $.ajax({
+    url: "/api/roster/" + teamName,
+    method: "GET"
+  }).then(function(data) {
+    console.log(data)
   })
 }
 
-
-setTeamNews();
-
-
-
-
-
-
-
-
-// console.log($(".article-pic-left")[0])
+setRoster();

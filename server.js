@@ -3,8 +3,8 @@ const newsapi = new NewsAPI('4064b95643d24a48a9b28a7ad95f81e4');
 const fs = require('fs');
 var MySportsFeeds = require("mysportsfeeds-node");
 var msf = new MySportsFeeds("2.0", true);
-// msf.authenticate("3c05ee98-ad49-4e16-b24e-46c9b5", "MYSPORTSFEEDS");
-// var data = msf.getData('nfl', '2018-2019-regular', 'players', 'json', {team: "NYJ", rosterstatus: "assigned-to-roster", position: "qb"});
+msf.authenticate("3c05ee98-ad49-4e16-b24e-46c9b5", "MYSPORTSFEEDS");
+// var data = msf.getData('nfl', '2018-2019-regular', 'players', 'json', {rosterstatus: "assigned-to-roster"});
 // var data = msf.getData('nfl', '2018-2019-regular', 'weekly_games', 'json', {week: "12", sort: "game.starttime", rosterstatus: "assigned-to-roster", force: "true"});
 
 
@@ -72,44 +72,58 @@ app.get("/fanposts", function (req, res) {
 
 
 app.get("/api/news/:team", function (req, res) {
-console.log(req.params.team)
-  const teamName = (req.params.team.split(" ")[1]);
 
   // Team News API Call
   newsapi.v2.everything({
     q: req.params.team,
-    // q: 'philadelphia eagles',
-    pageSize: 50,
+    pageSize: 100,
     sortBy: 'publishedAt',
     language: 'en'
   }).then((response, err) => {
     if (err) throw err;
 
-    
-
-    
-    
-    res.json(response)
+      res.json(response)
 
   })
 })
 
+app.get("/api/roster/:team", function (req, res) {
+// Reads the file that gets created with the data called from the API
+fs.readFile('results/players-nfl-2018-2019-regular.json', 'utf8', function (err, data) {
+  if (err) throw err;
+  JSON.parse(data, null, 2).players.forEach((player, i) => {
+    const playerData = {
+      "jerseyNumber": player.player.jerseyNumber,
+      "firstName": player.player.firstName,
+      "lastName": player.player.lastName,
+      "primaryPosition": player.player.primaryPosition,
+      "height": player.player.height,
+      "weight": player.player.weight,
+      "age": player.player.age
+    } 
+    res.json(playerData);
+    // playerData.forEach(player => console.log(isNullOrZero(player)));
+  })
+});
+
+})
 
 
-  // NFL News API Call
-  // newsapi.v2.everything({
-  //   sources: "nfl-news",
-  //   sortBy: 'publishedAt',
-  //   pageSize: 7,
-  //   language: 'en'
-  // }).then((response, err) => {
-  //   if (err) throw err;
 
-  //   response.articles.forEach(article => {
-  //     const nflArticleData = [article.source.name, article.publishedAt, article.url, article.urlToImage, article.title, article.description]
-  //     nflArticleData.forEach(article => console.log(article))
-  //   })
-  // });
+// NFL News API Call
+// newsapi.v2.everything({
+//   sources: "nfl-news",
+//   sortBy: 'publishedAt',
+//   pageSize: 7,
+//   language: 'en'
+// }).then((response, err) => {
+//   if (err) throw err;
+
+//   response.articles.forEach(article => {
+//     const nflArticleData = [article.source.name, article.publishedAt, article.url, article.urlToImage, article.title, article.description]
+//     nflArticleData.forEach(article => console.log(article))
+//   })
+// });
 
 
 // Function to replace data in Roster Chart not put in by API with a '*'. Will have a note on the site for this
@@ -120,3 +134,38 @@ function isNullOrZero(data) {
 app.listen(PORT, function () {
   console.log("App listening on PORT: " + PORT);
 });
+
+
+
+
+// NFL News API Call
+// newsapi.v2.everything({
+//   q: 'philadelphia eagles',
+//   pageSize: 20,
+//   sortBy: 'publishedAt',
+//   language: 'en'
+// }).then((response, err) => {
+//   if (err) throw err;
+
+//   response.articles.forEach(article => {
+//     const articleData = [article.title, article.url, article.urlToImage];
+//     if (article.title.includes("Eagles")) {
+//       articleData.forEach(article => console.log(article))
+//     }
+//   });
+// })
+
+// // Team News API Call
+// newsapi.v2.everything({
+//   sources: "nfl-news",
+//   sortBy: 'publishedAt',
+//   pageSize: 7,
+//   language: 'en'
+// }).then((response, err) => {
+//   if (err) throw err;
+
+//   response.articles.forEach(article => {
+//     const nflArticleData = [article.source.name, article.publishedAt, article.url, article.urlToImage, article.title, article.description]
+//     nflArticleData.forEach(article => console.log(article))
+//   })
+// });
