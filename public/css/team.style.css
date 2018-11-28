@@ -1,3 +1,8 @@
+:root {
+  --primary-color: #ff6f69;
+  --secondary-color: #fdf342;
+}
+
 body {
   /* font-family: 'Raleway', sans-serif; */
   font-family: 'Orbitron', sans-serif;
@@ -136,16 +141,16 @@ textarea {
 }
 
 .chat-submit, .chat-submit:hover, .chat-submit:focus {
-  background: #1482c5 !important;
-  outline: none !important;
-  box-shadow: none !important;
+  background: #1482c5 ;
+  outline: none ;
+  box-shadow: none ;
   letter-spacing: 2px;
 }
 
 .chat-clear, .chat-clear:hover, .chat-clear:focus  {
-  background: #cc0000 !important;
-  outline: none !important;
-  box-shadow: none !important;
+  background: #cc0000 ;
+  outline: none ;
+  box-shadow: none ;
   letter-spacing: 2px;
 }
 
@@ -156,12 +161,12 @@ textarea {
 }
 
 .chat-submit:active {
-  outline: 2px solid #cc0000 !important;
-  box-shadow: 0 0 1px 1px #cc0000 !important;
+  outline: 2px solid #cc0000 ;
+  box-shadow: 0 0 1px 1px #cc0000 ;
 }
 .chat-clear:active {
-  outline: 2px solid #1482c5 !important;
-  box-shadow: 0 0 1px 1px #1482c5 !important;
+  outline: 2px solid #1482c5 ;
+  box-shadow: 0 0 1px 1px #1482c5 ;
 }
 
 .col-2 {
@@ -178,6 +183,8 @@ textarea {
   opacity: 1;
 
 
+  
+  
   /* font-family: 'Play', sans-serif; */
   /* font-family: 'Permanent Marker', cursive; */
   font-family: 'Orbitron', cursive;
@@ -325,17 +332,18 @@ h5 a {
 
 
 .section {
-  height: 230px;
-  width: 300px;
+  height: 180px;
+  width: 280px;
+
   /* background: green; */
   position: relative;
-  padding: 10px 8px 0px 8px;
+  padding: 10px 8px 8px 8px;
   
 }
 
 .team-section {
   height: 270px;
-  width: 300px;
+  width: 310px;
   position: relative;
   padding: 10px 8px 0px 0px;
  }
@@ -352,7 +360,7 @@ h5 a {
 opacity: 1;
 display: block;
 width: 100%;
-height: auto;
+height: 100%;
 transition: .5s ease;
 backface-visibility: hidden;
 
@@ -510,32 +518,32 @@ line-height: 30px;
 
 
 /* .primary-hr, .btn-secondary:hover {
-  background: #cc0000 !important;
+  background: #cc0000 ;
  }
 .overlay, .active {
-  color: #cc0000 !important;
+  color: #cc0000 ;
 }
 
 .article-pic-left {
-  border: 4px solid #1482c5 !important;
+  border: 4px solid #1482c5 ;
 }
 
 .active {
-  border-bottom: 2px solid #cc0000 !important;
+  border-bottom: 2px solid #cc0000 ;
 }
  
 h4 {
-  color:#1482c5 !important;
+  color:#1482c5 ;
 }
 
 .secondary-hr, .dropdown-toggle, .btn-secondary:not(:disabled):not(.disabled).active, .btn-secondary:not(:disabled):not(.disabled):active, .show>.btn-secondary.dropdown-toggle {
-  background: #1482c5 !important;
+  background: #1482c5 ;
 }
 
 
 
 .leftTeam:hover, .rightTeam:hover {
-  border-bottom: 2px solid #1482c5 !important;
+  border-bottom: 2px solid #1482c5 ;
 }  */
 
 
@@ -548,7 +556,7 @@ h4 {
   background: rgb(233, 236, 239, 0.95);
   color: black;
   margin: 0 auto;
-  border-radius: 5px !important;
+  border-radius: 5px ;
 }
 
 .chat-container {
@@ -607,33 +615,41 @@ label {
 
 
 .primary-hr, .dropdown-toggle, .btn-secondary:not(:disabled):not(.disabled).active, .btn-secondary:not(:disabled):not(.disabled):active, .show>.btn-secondary.dropdown-toggle  {
- background: #004C54 !important;
+ background: var(--primary-color);
 }
 
 .overlay, .active {
- color: #004C54 !important;
+ color: var(--primary-color);
 }
 
 .active {
-  border-bottom: 2px solid #004C54 !important;
+  border-bottom: 2px solid var(--primary-color);
 }
 
 
 .article-pic-left {
-  border: 4px solid #004C54 !important;
+  border: 4px solid var(--primary-color);
  }
 
 
 h4 {
- color:#A5ACAF !important;
+ color:var(--secondary-color);
 }
 
 .secondary-hr, .btn-secondary:hover {
- background: #A5ACAF !important;
+ background: var(--secondary-color);
 }
 
 
 
 .leftTeam:hover, .rightTeam:hover {
- border-bottom: 2px solid #A5ACAF !important;
+ border-bottom: 2px solid var(--secondary-color);
+}
+
+
+.primary-hr {
+  background: var(--primary-color);
+}
+.secondary-hr {
+  background: var(--secondary-color);
 }
