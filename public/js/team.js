@@ -1,7 +1,6 @@
 
 //variable for url to get team name
 const url = location.href.split("/");
-console.log(url);
 const team = url[url.length - 1]
 const teamData = {
   cardinals: {
@@ -267,6 +266,7 @@ const teamData = {
 
 const setTeamPage = () => {
 
+  $("#team-headline").text(team)
 
   //variable for the root class set for CSS Variables
   const root = document.querySelector(':root');
@@ -295,30 +295,32 @@ setTeamPage();
 const setTeamNews = () => {
 
   const teamName = teamData[team].city + " " + teamData[team].name;
+  // console.log(teamData[team].name)
   $.ajax({
     url: "/api/news/" + teamName,
     method: "GET"
   }).then(function (data) {
-
+    
     // console.log(data.articles)
+    
+    
 
-   data.articles.forEach(article => {
-      // console.log(article)
-    })
+    // const teamProper = teamName.split(" ")[1].charAt(0).toUpperCase() + teamName.split(" ")[1].slice(1)
 
-    const teamProper = team.charAt(0).toUpperCase() + team.slice(1);
-
-    const filteredArticles = data.articles.filter(article => {
+    // console.log(teamProper)
+    // const filteredArticles = data.articles.filter(article => {
       // return article.title.includes(teamProper) && article.urlToImage && article.source.id !== "bleacher-report" && article.source.id !== "usa-today";
       // return article.description.includes(teamProper) && article.source.name !== "Nownews.com" && article.source.name !== "USA Today";
-      return (article.description.includes(teamProper) || article.title.includes(teamProper)) && article.urlToImage && article.source.name !== "Nownews.com";
-    })
+      // return (article.description.includes(teamProper) || article.title.includes(teamProper)) && article.urlToImage;
+      // return article.urlToImage;
+      // return article.title.includes(teamProper) && article.urlToImage;
+    // })
 
-    console.log(filteredArticles)
+    // console.log(filteredArticles)
 
     const teamNewsArray = [];
 
-    filteredArticles.forEach((article) => {
+    data.articles.forEach((article) => {
 
         teamNewsArray.push(
           {

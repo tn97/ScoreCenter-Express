@@ -12,7 +12,7 @@ var msf = new MySportsFeeds("2.0", true);
 msf.authenticate("3c05ee98-ad49-4e16-b24e-46c9b5", "MYSPORTSFEEDS");
 // var data = msf.getData('nfl', '2018-2019-regular', 'players', 'json', {sort: "player.position"}, {rosterstatus: 'assigned-to-roster'});
 // var data = msf.getData('nfl', '2018-2019-regular', 'weekly_games', 'json', { week: "13", sort: "game.starttime", rosterstatus: "assigned-to-roster", force: "true" });
-var data = msf.getData('nfl', '2018-2019-regular', 'seasonal_standings', 'json', {force: "true" });
+var data = msf.getData('nfl', '2018-2019-regular', 'seasonal_standings', 'json', { force: "true" });
 
 
 const express = require("express");
@@ -75,78 +75,97 @@ app.get("/fanposts", function (req, res) {
 
 app.get("/api/news/:team", function (req, res) {
 
-  // Team News API Call
-  newsapi.v2.everything({
-    q: req.params.team,
-    pageSize: 100,
-    sortBy: 'publishedAt',
-    language: 'en'
-  }).then((response, err) => {
-    if (err) throw err;
-
-    res.json(response)
-
-  })
+  if (req.params.team === "all") {
+    newsapi.v2.topHeadlines({
+      sources: "nfl-news",
+      sortBy: 'popularity',
+      pageSize: 100,
+      language: 'en'
+    }).then((response, err) => {
+      if (err) throw err;
+      res.json(response)
+    });
+  } else {
+    newsapi.v2.everything({
+      q: req.params.team,
+      pageSize: 100,
+      sortBy: 'relevance',
+      language: 'en'
+    }).then((response, err) => {
+      if (err) throw err;
+      res.json(response)
+    });
+  }
 })
 
-app.get("/api/divisions", function(req, res) {
-
-  fs.readFile('results/seasonal_standings-nfl-2018-2019-regular.json', 'utf8', function (err, data) {
-    if (err) throw err;
-    const filteredData = JSON.parse(data, null, 2);
-    
-    const standingsArray = [];
-
-    filteredData.teams.forEach(squad => {
 
 
-  
-      standingsArray.push({
-        "name": (squad.team.name === "49ers") ? (squad.team.name = "Niners") : (squad.team.name),
-        "wins": squad.stats.standings.wins,
-        "losses": squad.stats.standings.losses,
-        "ties": squad.stats.standings.ties,
-        "divisionName": squad.divisionRank.divisionName,
-        "divisionRank": squad.divisionRank.rank,
+
+
+
+
+
+
+
+
+  app.get("/api/divisions", function (req, res) {
+
+    fs.readFile('results/seasonal_standings-nfl-2018-2019-regular.json', 'utf8', function (err, data) {
+      if (err) throw err;
+      const filteredData = JSON.parse(data, null, 2);
+
+      const standingsArray = [];
+
+      filteredData.teams.forEach(squad => {
+
+
+
+        standingsArray.push({
+          "name": (squad.team.name === "49ers") ? (squad.team.name = "Niners") : (squad.team.name),
+          "wins": squad.stats.standings.wins,
+          "losses": squad.stats.standings.losses,
+          "ties": squad.stats.standings.ties,
+          "divisionName": squad.divisionRank.divisionName,
+          "divisionRank": squad.divisionRank.rank,
+        })
+
+
+
       })
 
 
-
-    })
-
-
-    res.json(standingsArray);
+      res.json(standingsArray);
 
     });
-})
+  })
 
-app.get("/api/matchups", function (req, res)  {
-
-
-  fs.readFile('results/weekly_games-nfl-2018-2019-regular.json', 'utf8', function (err, data) {
-    if (err) throw err;
-    const filteredData = JSON.parse(data, null, 2);
+  app.get("/api/matchups", function (req, res) {
 
 
-    const matchupArray = [];
+    fs.readFile('results/weekly_games-nfl-2018-2019-regular.json', 'utf8', function (err, data) {
+      if (err) throw err;
+      const filteredData = JSON.parse(data, null, 2);
 
-    filteredData.games.forEach(matchup => {
+
+      const matchupArray = [];
+
+      filteredData.games.forEach(matchup => {
 
 
 
-      matchupArray.push(
-        {
-          "awayScore": matchup.score.awayScoreTotal,
-          "homeScore": matchup.score.homeScoreTotal,
-          "currentWeek": matchup.schedule.week,
-          "startTime": matchup.schedule.startTime,
-          "homeTeam": matchup.schedule.homeTeam.abbreviation,
-          "awayTeam": matchup.schedule.awayTeam.abbreviation,
-        }
-      );
-    })
+        matchupArray.push(
+          {
+            "awayScore": matchup.score.awayScoreTotal,
+            "homeScore": matchup.score.homeScoreTotal,
+            "currentWeek": matchup.schedule.week,
+            "startTime": matchup.schedule.startTime,
+            "homeTeam": matchup.schedule.homeTeam.abbreviation,
+            "awayTeam": matchup.schedule.awayTeam.abbreviation,
+          }
+        );
+      })
 
-    res.json(matchupArray);
+      res.json(matchupArray);
 
     });
 
@@ -157,84 +176,84 @@ app.get("/api/matchups", function (req, res)  {
     //   })
     // });
 
-  
-
-});
-
-app.get("/api/roster/:team", function (req, res) {
-
-  console.log(req.params.team)
-
-  // Reads the file that gets created with the data called from the API
-  fs.readFile('results/players-nfl-2018-2019-regular.json', 'utf8', function (err, data) {
-    if (err) throw err;
-
-    const filteredData = JSON.parse(data, null, 2).players.filter(athlete => {
 
 
-      return (athlete.player.currentTeam != null) && (athlete.player.currentTeam.abbreviation === req.params.team);
+  });
 
-    });
+  app.get("/api/roster/:team", function (req, res) {
 
-    const playerArray = [];
+    console.log(req.params.team)
+
+    // Reads the file that gets created with the data called from the API
+    fs.readFile('results/players-nfl-2018-2019-regular.json', 'utf8', function (err, data) {
+      if (err) throw err;
+
+      const filteredData = JSON.parse(data, null, 2).players.filter(athlete => {
 
 
-    filteredData.forEach(athlete => {
+        return (athlete.player.currentTeam != null) && (athlete.player.currentTeam.abbreviation === req.params.team);
 
-      playerArray.push(
-        {
-          "jerseyNumber": athlete.player.jerseyNumber,
-          "firstName": athlete.player.firstName,
-          "lastName": athlete.player.lastName,
-          "primaryPosition": athlete.player.primaryPosition,
-          "height": athlete.player.height,
-          "weight": athlete.player.weight,
-          "age": athlete.player.age
-        }
-      );
+      });
 
-    });
+      const playerArray = [];
 
-    const nulledArray = replaceNull(playerArray);
 
-    res.json(nulledArray);
+      filteredData.forEach(athlete => {
 
+        playerArray.push(
+          {
+            "jerseyNumber": athlete.player.jerseyNumber,
+            "firstName": athlete.player.firstName,
+            "lastName": athlete.player.lastName,
+            "primaryPosition": athlete.player.primaryPosition,
+            "height": athlete.player.height,
+            "weight": athlete.player.weight,
+            "age": athlete.player.age
+          }
+        );
+
+      });
+
+      const nulledArray = replaceNull(playerArray);
+
+      res.json(nulledArray);
+
+    })
   })
-})
 
 
 
 
-// NFL News API Call
-// newsapi.v2.everything({
-//   sources: "nfl-news",
-//   sortBy: 'publishedAt',
-//   pageSize: 7,
-//   language: 'en'
-// }).then((response, err) => {
-//   if (err) throw err;
+  // NFL News API Call
+  // newsapi.v2.everything({
+  //   sources: "nfl-news",
+  //   sortBy: 'publishedAt',
+  //   pageSize: 7,
+  //   language: 'en'
+  // }).then((response, err) => {
+  //   if (err) throw err;
 
-//   response.articles.forEach(article => {
-//     const nflArticleData = [article.source.name, article.publishedAt, article.url, article.urlToImage, article.title, article.description]
-//     nflArticleData.forEach(article => console.log(article))
-//   })
-// });
+  //   response.articles.forEach(article => {
+  //     const nflArticleData = [article.source.name, article.publishedAt, article.url, article.urlToImage, article.title, article.description]
+  //     nflArticleData.forEach(article => console.log(article))
+  //   })
+  // });
 
 
-// Function to replace data in Roster Chart not put in by API with a '*'. Will have a note on the site for this
-function replaceNull(data) {
+  // Function to replace data in Roster Chart not put in by API with a '*'. Will have a note on the site for this
+  function replaceNull(data) {
 
-  data.forEach(obj => {
-    for (let key in obj) {
-      (obj[key] === null) ? (obj[key] = '*') : (false);
-    }
-  })
-  return data;
-}
+    data.forEach(obj => {
+      for (let key in obj) {
+        (obj[key] === null) ? (obj[key] = '*') : (false);
+      }
+    })
+    return data;
+  }
 
-app.listen(PORT, function () {
-  console.log("App listening on PORT: " + PORT);
-});
+  app.listen(PORT, function () {
+    console.log("App listening on PORT: " + PORT);
+  });
 
 
 

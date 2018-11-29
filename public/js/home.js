@@ -334,7 +334,7 @@ const setMatchups = () => {
 
    // console.log(teamNames[matchup.awayTeam].split(" ")[1]);
 
-   let $matchup = `<div class='section matchup mb-2'>
+   let $matchup = `<div class='matchup mb-2'>
  <div class='matchup-row'>
   <div class='awayTeam'>
    <div class='record mb-2'>
@@ -415,6 +415,39 @@ const setMatchups = () => {
 }
 // console.log(teamData)
 
+
+
+const setHomeNews = () => {
+ $.ajax({
+  url: "/api/news/all",
+  method: "GET"
+ }).then(function (data) {
+console.log(data)
+
+  const homeNewsArray = []
+
+  data.articles.forEach(article => {
+   homeNewsArray.push(
+    {
+     "title": article.title,
+     "url": article.url,
+     "urlToImage": article.urlToImage,
+    });
+   
+  })
+
+  for (let x = 0; x < $(".article-pic-left").length; x++) {
+   $(".text")[x].innerText = homeNewsArray[x].title;
+   $(".article-pic-left")[x].src = homeNewsArray[x].urlToImage;
+ }
+
+ $(".article-pic-left").on("error", function() {
+   $(this).attr('src', `/photos/$${team}.png`);
+ });
+
+ })
+}
+
 setRecords()
 setMatchups()
-
+setHomeNews()

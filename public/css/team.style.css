@@ -331,14 +331,11 @@ h5 a {
   }
 
 
-.section {
-  height: 180px;
-  width: 280px;
-
-  /* background: green; */
-  position: relative;
-  padding: 10px 8px 8px 8px;
-  
+  .section {
+    height: 170px;
+    width: 241px;
+    position: relative;
+    margin: 3px;
 }
 
 .team-section {
@@ -346,6 +343,7 @@ h5 a {
   width: 310px;
   position: relative;
   padding: 10px 8px 0px 0px;
+  margin-left: 10px;
  }
 
 
@@ -367,16 +365,17 @@ backface-visibility: hidden;
 }
 
 .middle {
-width: 250px;
-transition: .5s ease;
-opacity: 0;
-position: absolute;
-top: 60%;
-left: 50%;
-transform: translate(-50%, -50%);
--ms-transform: translate(-50%, -50%);
-text-align: center;
-
+  height: 94%;
+  width: 97%;
+  transition: .5s ease;
+  opacity: 0;
+  position: absolute;
+  top: 49%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  text-align: center;
+  padding-top: 10px;
 }
 
 .section:hover .image {
@@ -392,9 +391,10 @@ opacity: 1;
 }
 
 .text {
-height: 150px;
+height: 100%;
+width: 100%;
 color: black;
-font-size: 20px;
+font-size: 17px;
 letter-spacing: 2px;
 font-family: 'Raleway', sans-serif;
 font-weight: 500;

@@ -27,7 +27,7 @@
       <div class="navbar-nav">
         <a class="nav-item nav-link active" href="/home">NFL Home<span class="sr-only">(current)</span></a>
         <a class="nav-item nav-link" href="/fanposts">Fan Posts</a>
-        <a class="nav-item nav-link" href="/fanchat">Fan Chat</a>
+        <a class="nav-item nav-link mr-3" href="/fanchat">Fan Chat</a>
 
 
 
@@ -114,7 +114,7 @@
 
 
 
-<div class="container"></div>
+
   <div class="row article-row justify-content-center align-items-center" >
       <div class="team-section matchup matchup-left">
         <h3 class="text-center mb-2">Current Matchup</h3>
@@ -193,7 +193,7 @@
   <hr class="white-hr">
   
   
-    <h3 class="text-center">Top Eagles Headlines</h3>
+    <h3 class="text-center mb-3">Top <span id="team-headline"></span> Headlines</h3>
   
   
   
@@ -221,35 +221,20 @@
           </div>
         </div>
         <div class="section">
-          <img class="article-pic-left image" src="http://static.nfl.com/static/content/public/photo/2018/11/20/0ap3000000990580_thumbnail_200_150.jpg">
+          <img class="article-pic-left image" src="http://static.nfl.com/static/content/public/photo/2018/11/21/0ap3000000990813_thumbnail_200_150.jpg">
           <div class="middle">
             <div class="text" id="newsText">Chase Daniel slated to start at QB for Bears vs. Lions</div>
           </div>
         </div>
         <div class="section">
-          <img class="article-pic-left image" src="http://static.nfl.com/static/content/public/photo/2018/11/20/0ap3000000990634_thumbnail_200_150.jpg">
+          <img class="article-pic-left image" src="http://static.nfl.com/static/content/public/photo/2018/11/21/0ap3000000990813_thumbnail_200_150.jpg">
           <div class="middle">
-            <div class="text" id="newsText">Brady (knee) limited in practice, should play vs. Jets</div>
+            <div class="text" id="newsText">Chase Daniel slated to start at QB for Bears vs. Lions</div>
           </div>
         </div>
-        <div class="section">
-          <img class="article-pic-left image" src="http://static.nfl.com/static/content/public/photo/2018/11/20/0ap3000000990623_thumbnail_200_150.jpg">
-          <div class="middle">
-            <div class="text" id="newsText">Brady (knee) limited in practice, should play vs. Jets</div>
-          </div>
-        </div>
-        <div class="section">
-          <img class="article-pic-left image" src="http://static.nfl.com/static/content/public/photo/2018/11/19/0ap3000000990498_thumbnail_200_150.jpg">
-          <div class="middle">
-            <div class="text" id="newsText">Brady (knee) limited in practice, should play vs. Jets</div>
-          </div>
-        </div>
-        <div class="section">
-          <img class="article-pic-left image" src="http://static.nfl.com/static/content/public/photo/2018/10/09/0ap3000000972213_thumbnail_200_150.jpg">
-          <div class="middle">
-            <div class="text" id="newsText">Brady (knee) limited in practice, should play vs. Jets</div>
-          </div>
-        </div>
+
+
+
       </div>
     </div>
   
@@ -258,7 +243,7 @@
     <hr class="secondary-hr">
     <hr class="white-hr">
   
-      <h3 class="text-center">Team Roster</h3>
+      <h3 class="text-center mb-3">Team Roster</h3>
 
       <table class="table" id="roster-table">
           <thead>
@@ -292,11 +277,11 @@
   
 
 
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js" ></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
-    <!-- <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>  -->  
-      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" ></script> 
-    <script src="/js/script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/moment.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script> -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <script src="/js/team.js"></script>
   
   </body>
 
