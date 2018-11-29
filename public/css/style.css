@@ -10,7 +10,7 @@ body {
   max-width: 1300px;
 }
 
-.signup, .login, .chat {
+.signup, .login, .container-for-chat {
   background: url(../photos/bills-crowd-edit.png);
   background-size: cover;
   background-repeat: no-repeat;

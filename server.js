@@ -1,6 +1,3 @@
-
-
-
 var $ = require('jquery');
 // var dt      = require( 'datatables.net' )();
 // var buttons = require( 'datatables.net-buttons' )();
@@ -14,13 +11,12 @@ msf.authenticate("3c05ee98-ad49-4e16-b24e-46c9b5", "MYSPORTSFEEDS");
 // var data = msf.getData('nfl', '2018-2019-regular', 'weekly_games', 'json', { week: "13", sort: "game.starttime", rosterstatus: "assigned-to-roster", force: "true" });
 var data = msf.getData('nfl', '2018-2019-regular', 'seasonal_standings', 'json', { force: "true" });
 
-
 const express = require("express");
 var path = require("path");
 
 var app = express();
 var PORT = process.env.PORT || 3000;
-
+var io = require("socket.io");
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "./public")));
@@ -43,7 +39,6 @@ app.get("/signup", function (req, res) {
   res.sendFile(path.join(__dirname, "./public/signup.html"));
 });
 
-
 app.get("/home", function (req, res) {
   res.sendFile(path.join(__dirname, "./public/home.html"));
 });
@@ -65,13 +60,6 @@ app.get("/fanposts", function (req, res) {
 //     playerData.forEach(player => console.log(isNullOrZero(player)));
 //   })
 // });
-
-
-
-
-
-
-
 
 app.get("/api/news/:team", function (req, res) {
 
