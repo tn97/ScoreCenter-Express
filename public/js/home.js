@@ -261,24 +261,12 @@ const teamData = {
 const teamNames = {};
 
 for (let team in teamData) {
-
-
-
- for (let property in teamData[team]) {
-
-  // console.log(property)
-  if (property === "abbr") {
-
-   // console.log(teamData[team].abbr)
-
+  for (let property in teamData[team]) {
    abbreviation = teamData[team].abbr;
-
    teamNames[abbreviation] = {
     full: titleCase(teamData[team].city + " " + teamData[team].name),
     part: teamData[team].name
    }
-
-  }
  }
 }
 

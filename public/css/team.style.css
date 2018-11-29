@@ -265,7 +265,7 @@ h4 {
 }
 
 
-.leftTeam {
+.awayTeam {
   position: absolute;
   /* border: 1px solid darkgreen; */
   height: 216px;
@@ -275,7 +275,7 @@ h4 {
 
 }
 
-.rightTeam {
+.homeTeam {
   position: absolute;
   /* border: 1px solid blue; */
   height: 216px;
@@ -309,6 +309,7 @@ h5 a {
   z-index: 5;
   left: 48.2%;
   top: 30%;
+  margin-top: 60px;
 }
   
   .black-hr {
@@ -542,7 +543,7 @@ h4 {
 
 
 
-.leftTeam:hover, .rightTeam:hover {
+.awayTeam:hover, .homeTeam:hover {
   border-bottom: 2px solid #1482c5 ;
 }  */
 
@@ -642,7 +643,7 @@ h4 {
 
 
 
-.leftTeam:hover, .rightTeam:hover {
+.awayTeam:hover, .homeTeam:hover {
  border-bottom: 2px solid var(--secondary-color);
 }
 
