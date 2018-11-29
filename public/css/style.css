@@ -260,21 +260,21 @@ h4 {
 }
 
 
-.leftTeam {
+.awayTeam {
   position: absolute;
   /* border: 1px solid darkgreen; */
   height: 216px;
-  width: 270px;
+  width: 300px;
   left: 0px;
   padding: 8px 0;
 
 }
 
-.rightTeam {
+.homeTeam {
   position: absolute;
   /* border: 1px solid blue; */
   height: 216px;
-  width: 270px;
+  width: 300px;
   left: 52.2%;
   padding: 8px 0;
 
@@ -302,7 +302,7 @@ h5 a {
 .at {
   position: absolute;
   z-index: 5;
-  left: 48.2%;
+  left: 50%;
   top: 30%;
 }
   
@@ -536,7 +536,7 @@ h4 {
 
 
 
-.leftTeam:hover, .rightTeam:hover {
+.awayTeam:hover, .homeTeam:hover {
   border-bottom: 2px solid #1482c5 !important;
 } 
 
@@ -635,6 +635,6 @@ h4 {
 
 
 
-.leftTeam:hover, .rightTeam:hover {
+.awayTeam:hover, .homeTeam:hover {
  border-bottom: 2px solid #A5ACAF !important;
 } */

@@ -1,6 +1,7 @@
 
 //variable for url to get team name
 const url = location.href.split("/");
+console.log(url);
 const team = url[url.length - 1]
 const teamData = {
   cardinals: {
@@ -260,118 +261,132 @@ const teamData = {
   }
 }
 
-// const setTeamPage = () => {
+// $(document).ready(function () {
+//   $('#roster-table').DataTable();
+// });
+
+const setTeamPage = () => {
 
 
-//   //variable for the root class set for CSS Variables
-//   const root = document.querySelector(':root');
+  //variable for the root class set for CSS Variables
+  const root = document.querySelector(':root');
 
-//   //assign and set primary and secondary colors from teamData object based on team
-//   const $primaryColor = teamData[team].primary;
-//   const $secondaryColor = teamData[team].secondary;
-//   root.style.setProperty('--primary-color', $primaryColor)
-//   root.style.setProperty('--secondary-color', $secondaryColor)
+  //assign and set primary and secondary colors from teamData object based on team
+  const $primaryColor = teamData[team].primary;
+  const $secondaryColor = teamData[team].secondary;
+  root.style.setProperty('--primary-color', $primaryColor)
+  root.style.setProperty('--secondary-color', $secondaryColor)
 
-//   //changing image based on team
-//   const $jumboImage = `/photos/$${team}.png`
-//   $(".jumbo-image").attr("src", $jumboImage);
+  //changing image based on team
+  const $jumboImage = `/photos/$${team}.png`
+  $(".jumbo-image").attr("src", $jumboImage);
 
-//   $("#teamCity").text(teamData[team].city.toUpperCase())
-//   $("#teamName").text(teamData[team].name.toUpperCase())
-// }
-
-
-// setTeamPage();
-
-
-// const setTeamNews = () => {
-
-//   const teamName = teamData[team].city + " " + teamData[team].name;
-//   $.ajax({
-//     url: "/api/news/" + teamName,
-//     method: "GET"
-//   }).then(function (data) {
-
-//     // console.log(data.articles)
-
-//    data.articles.forEach(article => {
-//       // console.log(article)
-//     })
-
-//     const teamProper = team.charAt(0).toUpperCase() + team.slice(1);
-
-//     const filteredArticles = data.articles.filter(article => {
-//       // return article.title.includes(teamProper) && article.urlToImage && article.source.id !== "bleacher-report" && article.source.id !== "usa-today";
-//       // return article.description.includes(teamProper) && article.source.name !== "Nownews.com" && article.source.name !== "USA Today";
-//       return (article.description.includes(teamProper) || article.title.includes(teamProper)) && article.urlToImage && article.source.name !== "Nownews.com";
-//     })
-
-//     console.log(filteredArticles)
-
-//     const teamNewsArray = [];
-
-//     filteredArticles.forEach((article) => {
-
-//         teamNewsArray.push(
-//           {
-//             "title": article.title,
-//             "url": article.url,
-//             "urlToImage": article.urlToImage,
-//             "source": article.source.name,
-//             "description": article.description
-//           });
-//         })
+  $("#teamCity").text(teamData[team].city.toUpperCase())
+  $("#teamName").text(teamData[team].name.toUpperCase())
 
 
 
+}
 
 
-//     // console.log(teamNewsArray)
+setTeamPage();
 
 
+const setTeamNews = () => {
 
-//     for (let x = 0; x < $(".article-pic-left").length; x++) {
-//       $(".text")[x].innerText = teamNewsArray[x].title;
-//       $(".article-pic-left")[x].src = teamNewsArray[x].urlToImage;
-//     }
+  const teamName = teamData[team].city + " " + teamData[team].name;
+  $.ajax({
+    url: "/api/news/" + teamName,
+    method: "GET"
+  }).then(function (data) {
 
-//     $(".article-pic-left").on("error", function() {
-//       $(this).attr('src', `/photos/$${team}.png`);
-//     });
+    // console.log(data.articles)
+
+   data.articles.forEach(article => {
+      // console.log(article)
+    })
+
+    const teamProper = team.charAt(0).toUpperCase() + team.slice(1);
+
+    const filteredArticles = data.articles.filter(article => {
+      // return article.title.includes(teamProper) && article.urlToImage && article.source.id !== "bleacher-report" && article.source.id !== "usa-today";
+      // return article.description.includes(teamProper) && article.source.name !== "Nownews.com" && article.source.name !== "USA Today";
+      return (article.description.includes(teamProper) || article.title.includes(teamProper)) && article.urlToImage && article.source.name !== "Nownews.com";
+    })
+
+    console.log(filteredArticles)
+
+    const teamNewsArray = [];
+
+    filteredArticles.forEach((article) => {
+
+        teamNewsArray.push(
+          {
+            "title": article.title,
+            "url": article.url,
+            "urlToImage": article.urlToImage,
+            "source": article.source.name,
+            "description": article.description
+          });
+        })
 
 
 
 
-//   })
+
+    // console.log(teamNewsArray)
 
 
-// }
 
-// setTeamNews();
+    for (let x = 0; x < $(".article-pic-left").length; x++) {
+      $(".text")[x].innerText = teamNewsArray[x].title;
+      $(".article-pic-left")[x].src = teamNewsArray[x].urlToImage;
+    }
+
+    $(".article-pic-left").on("error", function() {
+      $(this).attr('src', `/photos/$${team}.png`);
+    });
+
+
+
+
+  })
+
+
+}
+
+setTeamNews();
+
+
 
 
 const setRoster = () => {
 
   const teamAbbr = teamData[team].abbr;
 
+
+
+
   $.ajax({
-    url: "/api/roster/" + teamAbbr,
-    method: "GET"
-  }).then(function (data) {
+        url: "/api/roster/" + teamAbbr,
+        method: "GET"
+      }).then(function (data) {
     // console.log(data)
     data.forEach(player => {
-      let $tableRow = $("<tr>");
-      let $jerseyNumber = $("<td>").text(player.jerseyNumber);
-      let $firstName = $("<td>").text(player.firstName);
-      let $lastName = $("<td>").text(player.lastName);
-      let $primaryPosition = $("<td>").text(player.primaryPosition);
-      let $height = $("<td>").text(player.height);
-      let $weight = $("<td>").text(player.weight);
-      let $age = $("<td>").text(player.age);
+      const $tableRow = $("<tr>");
+      const $jerseyNumber = $("<td>").text(player.jerseyNumber);
+      const $firstName = $("<td>").text(player.firstName);
+      const $lastName = $("<td>").text(player.lastName);
+      const $primaryPosition = $("<td>").text(player.primaryPosition);
+      const $height = $("<td>").text(player.height);
+      const $weight = $("<td>").text(player.weight);
+      const $age = $("<td>").text(player.age);
 
       $tableRow.append($jerseyNumber, $firstName, $lastName, $primaryPosition, $height, $weight, $age)
-      $("#player-table").append($tableRow)
-      console.log($tableRow)
+
+      // $("tbody > tr").empty();
+      $("#roster-table > tbody").append($tableRow)
+
     })
 
 
@@ -381,3 +396,5 @@ const setRoster = () => {
 }
 
 setRoster();
+
+
