@@ -665,12 +665,12 @@ const teamData = [
 
 (function(){
 
+  const team = currentTeamData.teamNameLower;
 
   //variable for the root class set for CSS Variables
   const root = document.querySelector(':root');
 
   //assign and set primary and secondary colors from teamData object based on team
-  if (dataCheck(teamNameLower, team)) {
     $("#team-headline").text(team)
     const $primaryColor = teamData[team].primary;
     const $secondaryColor = teamData[team].secondary;
@@ -683,7 +683,7 @@ const teamData = [
 
     $("#teamCity").text(teamData[team].city.toUpperCase())
     $("#teamName").text(teamData[team].name.toUpperCase())
-  }
+  
 })();
 
 (function(){
