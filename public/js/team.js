@@ -1,3 +1,19 @@
+const dataCheck = (teamKey, searchKey) => {
+  teamData.forEach((team, i) => {
+    if (searchKey === teamData[i].teamKey) {
+      return true;
+    }
+  })
+}
+
+const titleCase = (str) => {
+  str = str.toLowerCase().split(' ');
+  for (var i = 0; i < str.length; i++) {
+    str[i] = str[i].charAt(0).toUpperCase() + str[i].slice(1);
+  }
+  return str.join(' ');
+}
+
 const currentTeamData = {}
 
 const teamData = [
@@ -575,27 +591,30 @@ const teamData = [
     teamRecord: "",
     teamJumboPhoto: "",
   }
-]
+];
 
-const dataCheck = (teamKey, searchKey) => {
-  teamData.forEach((team, i) => {
-    if (searchKey === teamData[i].teamKey) {
-      return true;
-    }
-  })
-}
 
-const setCurrentTeam = () => {
+(function(){
+  teamData.forEach(squad => {
+    squad.teamLowerFull = `${squad.teamCity} ${squad.teamNameLower}`;
+    squad.teamProperName = `${titleCase(squad.teamCity)} ${titleCase(squad.teamNameLower)}`;
+    squad.teamLowerPart = `${titleCase(squad.teamNameLower).toLowerCase()}`;
+    squad.teamJumboPhoto = `/photos/$${squad.teamNameLower}.png`;
+    squad.teamLogo = `/photos/${squad.teamNameLower}.gif`;
+  });
+})();
+
+(function(){
   const url = location.href.split("/");
   const team = url[url.length - 1]
   teamData.forEach((squad, i) => {
-    if (dataCheck(teamNameLower, team)) {
+    if (dataCheck(squad.teamNameLower, team)) {
       currentTeamData["data"] = squad[i];
     }
   })
-}
+})();
 
-const setRecords = () => {
+(function(){
   $.ajax({
     method: "GET",
     url: "/api/divisions"
@@ -608,95 +627,17 @@ const setRecords = () => {
       }
     })
   })
+})();
 
-}
+(function(){
 
-const setTeamInitialValues = () => {
-  teamData.forEach(squad => {
-    squad.teamLowerFull = `${squad.teamCity} ${squad.teamNameLower}`;
-    squad.teamProperName = `${titleCase(squad.teamCity)} ${titleCase(squad.teamNameLower)}`;
-    squad.teamLowerPart = `${titleCase(squad.teamNameLower).toLowerCase()}`;
-    squad.teamJumboPhoto = `/photos/$${squad.teamNameLower}.png`;
-    squad.teamLogo = `/photos/${squad.teamNameLower}.gif`;
-  })
-}
-
-const setTeamPage = () => {
-
-  $("#team-headline").text(currentTeamData.data.teamNameLower)
-
-  //variable for the root class set for CSS Variables
-  const root = document.querySelector(':root');
-
-  //assign and set primary and secondary colors from teamData object based on team
-  if (dataCheck(teamNameLower, team)) {
-    const $primaryColor = teamData[team].primary;
-    const $secondaryColor = teamData[team].secondary;
-    root.style.setProperty('--primary-color', $primaryColor)
-    root.style.setProperty('--secondary-color', $secondaryColor)
-
-    //changing image based on team
-    const $jumboImage = `/photos/$${team}.png`
-    $(".jumbo-image").attr("src", $jumboImage);
-
-    $("#teamCity").text(teamData[team].city.toUpperCase())
-    $("#teamName").text(teamData[team].name.toUpperCase())
-  }
-}
-
-const titleCase = (str) => {
-  str = str.toLowerCase().split(' ');
-  for (var i = 0; i < str.length; i++) {
-    str[i] = str[i].charAt(0).toUpperCase() + str[i].slice(1);
-  }
-  return str.join(' ');
-}
-
-setTeamInitialValues();
-setRecords();
-setTeamPage();
-setCurrentTeam();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-const setTeamNews = () => {
-
-  const teamName = teamData[team].city + " " + teamData[team].name;
+  const teamName = currentTeamData.teamLowerFull;
 
   $.ajax({
     url: "/api/news/" + teamName,
     method: "GET"
   }).then(function (data) {
-
-    // console.log(data.articles)
-
-
-
-    // const teamProper = teamName.split(" ")[1].charAt(0).toUpperCase() + teamName.split(" ")[1].slice(1)
-
-    // console.log(teamProper)
-    // const filteredArticles = data.articles.filter(article => {
-    // return article.title.includes(teamProper) && article.urlToImage && article.source.id !== "bleacher-report" && article.source.id !== "usa-today";
-    // return article.description.includes(teamProper) && article.source.name !== "Nownews.com" && article.source.name !== "USA Today";
-    // return (article.description.includes(teamProper) || article.title.includes(teamProper)) && article.urlToImage;
-    // return article.urlToImage;
-    // return article.title.includes(teamProper) && article.urlToImage;
-    // })
-
-    // console.log(filteredArticles)
-
+    console.log(data)
     const teamNewsArray = [];
 
     data.articles.forEach((article) => {
@@ -711,42 +652,43 @@ const setTeamNews = () => {
         });
     })
 
+    $(".article-pic-left").forEach((article, i) => {
+      $(".text")[i].innerText = teamNewsArray[i].title;
+      $(".article-pic-left")[i].src = teamNewsArray[i].urlToImage;
 
-
-
-
-    // console.log(teamNewsArray)
-
-
-
-    for (let x = 0; x < $(".article-pic-left").length; x++) {
-      $(".text")[x].innerText = teamNewsArray[x].title;
-      $(".article-pic-left")[x].src = teamNewsArray[x].urlToImage;
-    }
-
-    $(".article-pic-left").on("error", function () {
-      $(this).attr('src', `/photos/$${team}.png`);
-    });
-
-
-
-
+      $(".article-pic-left").on("error", function () {
+        $(this).attr('src', `/photos/$${team}.png`);
+      });
+    })
   })
+})();
+
+(function(){
 
 
-}
+  //variable for the root class set for CSS Variables
+  const root = document.querySelector(':root');
 
-setTeamNews();
+  //assign and set primary and secondary colors from teamData object based on team
+  if (dataCheck(teamNameLower, team)) {
+    $("#team-headline").text(team)
+    const $primaryColor = teamData[team].primary;
+    const $secondaryColor = teamData[team].secondary;
+    root.style.setProperty('--primary-color', $primaryColor)
+    root.style.setProperty('--secondary-color', $secondaryColor)
 
+    //changing image based on team
+    const $jumboImage = `/photos/$${team}.png`
+    $(".jumbo-image").attr("src", $jumboImage);
 
+    $("#teamCity").text(teamData[team].city.toUpperCase())
+    $("#teamName").text(teamData[team].name.toUpperCase())
+  }
+})();
 
+(function(){
 
-const setRoster = () => {
-
-  const teamAbbr = teamData[team].abbr;
-
-
-
+  const teamAbbr = currentTeamData.teamAbbr;
 
   $.ajax({
     url: "/api/roster/" + teamAbbr,
@@ -765,18 +707,38 @@ const setRoster = () => {
 
       $tableRow.append($jerseyNumber, $firstName, $lastName, $primaryPosition, $height, $weight, $age)
 
-      // $("tbody > tr").empty();
       $("#roster-table > tbody").append($tableRow)
 
     })
-
-
-
-
   })
-}
+})();
 
+
+
+
+setTeamInitialValues();
+setCurrentTeam();
+setRecords();
+setTeamNews();
+setTeamPage();
 setRoster();
 
 
-console.log(teamData.eagles)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
