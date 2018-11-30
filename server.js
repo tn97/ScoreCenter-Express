@@ -1,31 +1,9 @@
-<<<<<<< HEAD
-var express = require("express");
 
-var htmlRoutes = require("./routes/htmlRoutes");
+// Requiring necessary npm packages
 
-// Tells node that we are creating an "express" server
-var app = express();
-// Sets an initial port. We"ll use this later in our listener
-var PORT = process.env.PORT || 3000;
-
-// Sets up the Express app to handle data parsing
-
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
-app.use(express.static("public"));
-
-// Sets up route middleware
-// Use the apiRoutes file for any apiRoutes
-// Use the htmlRoutes file for all other routes
-
-app.use(htmlRoutes);
-
-
-app.listen(PORT, function() {
-  console.log("App listening on PORT: " + PORT);
-});
-=======
-
+const session = require("express-session");
+// Requiring passport as we've configured it
+const passport = require("./config/passport");
 
 
 var $ = require('jquery');
@@ -47,7 +25,7 @@ var path = require("path");
 
 var app = express();
 var PORT = process.env.PORT || 3000;
-
+const db = require("./models");
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "./public")));
@@ -57,6 +35,9 @@ app.get("/team/:team", function (req, res) {
   res.sendFile(path.join(__dirname, "./public/team.html"));
   // res.sendFile(path.join(__dirname, "./public/css/team.style.css"));
 });
+
+app.use("/api", require("./routes/apiRoutes.js"));
+app.use(require("./routes/htmlRoutes.js"));
 
 app.get("/", function (req, res) {
   res.sendFile(path.join(__dirname, "./public/login.html"));
@@ -278,8 +259,10 @@ app.get("/api/news/:team", function (req, res) {
     return data;
   }
 
-  app.listen(PORT, function () {
-    console.log("App listening on PORT: " + PORT);
+  db.sequelize.sync({force: false}).then(() => {
+    app.listen(PORT, () => {
+      console.log("==> 🌎  Listening on port %s. Visit http://localhost:%s/ in your browser.", PORT);
+    });
   });
 
 
@@ -316,4 +299,3 @@ app.get("/api/news/:team", function (req, res) {
 //     nflArticleData.forEach(article => console.log(article))
 //   })
 // });
->>>>>>> 02361796543e514fc88d55256e31cdc34d801358
