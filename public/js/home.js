@@ -322,7 +322,7 @@ const setMatchups = () => {
   url: "/api/matchups",
   method: "GET"
  }).then(function (data) {
-  // console.log(data);
+  console.log(data);
 
   data.forEach(matchup => {
    // console.log(matchup)
