@@ -1,6 +1,14 @@
+// Requiring necessary npm packages
+
+const session = require("express-session");
+// Requiring passport as we've configured it
+const passport = require("./config/passport");
+
+
+var $ = require('jquery');
+// var dt      = require( 'datatables.net' )();
+// var buttons = require( 'datatables.net-buttons' )();
 const NewsAPI = require('newsapi');
-const newsapi = new NewsAPI('4064b95643d24a48a9b28a7ad95f81e4');
-const fs = require('fs');
 var MySportsFeeds = require("mysportsfeeds-node");
 var msf = new MySportsFeeds("2.0", true);
 msf.authenticate("3c05ee98-ad49-4e16-b24e-46c9b5", "MYSPORTSFEEDS");
@@ -14,41 +22,20 @@ var path = require("path");
 
 var app = express();
 var PORT = process.env.PORT || 3000;
-
+const db = require("./models");
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "./public")));
 
+app.use(session({ secret: "keyboard cat", resave: true, saveUninitialized: true }));
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.get("/team/:team", function (req, res) {
   res.sendFile(path.join(__dirname, "./public/team.html"));
   // res.sendFile(path.join(__dirname, "./public/css/team.style.css"));
 });
 
-app.get("/", function (req, res) {
-  res.sendFile(path.join(__dirname, "./public/login.html"));
-});
-
-app.get("/login", function (req, res) {
-  res.sendFile(path.join(__dirname, "./public/login.html"));
-});
-
-app.get("/signup", function (req, res) {
-  res.sendFile(path.join(__dirname, "./public/signup.html"));
-});
-
-
-app.get("/home", function (req, res) {
-  res.sendFile(path.join(__dirname, "./public/home.html"));
-});
-
-app.get("/fanchat", function (req, res) {
-  res.sendFile(path.join(__dirname, "./public/fanchat.html"));
-});
-
-app.get("/fanposts", function (req, res) {
-  res.sendFile(path.join(__dirname, "./public/fanposts.html"));
-});
 
 
 // Reads the file that gets created with the data called from the API
@@ -215,6 +202,12 @@ app.get("/api/news/:team", function (req, res) {
 
     })
   })
+
+  
+app.use("/api", require("./routes/apiRoutes.js"));
+app.use(require("./routes/htmlRoutes.js"));
+
+
 
 
 
