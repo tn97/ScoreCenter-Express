@@ -1,4 +1,3 @@
-
 // Requiring necessary npm packages
 
 const session = require("express-session");
@@ -10,13 +9,11 @@ var $ = require('jquery');
 // var dt      = require( 'datatables.net' )();
 // var buttons = require( 'datatables.net-buttons' )();
 const NewsAPI = require('newsapi');
-const newsapi = new NewsAPI('4064b95643d24a48a9b28a7ad95f81e4');
-const fs = require('fs');
 var MySportsFeeds = require("mysportsfeeds-node");
 var msf = new MySportsFeeds("2.0", true);
 msf.authenticate("3c05ee98-ad49-4e16-b24e-46c9b5", "MYSPORTSFEEDS");
-// var data = msf.getData('nfl', '2018-2019-regular', 'players', 'json', {sort: "player.position"}, {rosterstatus: 'assigned-to-roster'});
-// var data = msf.getData('nfl', '2018-2019-regular', 'weekly_games', 'json', { week: "13", sort: "game.starttime", rosterstatus: "assigned-to-roster", force: "true" });
+var data = msf.getData('nfl', '2018-2019-regular', 'players', 'json', {sort: "player.position"}, {rosterstatus: 'assigned-to-roster'});
+var data = msf.getData('nfl', '2018-2019-regular', 'weekly_games', 'json', { week: "13", sort: "game.starttime", rosterstatus: "assigned-to-roster", force: "true" });
 var data = msf.getData('nfl', '2018-2019-regular', 'seasonal_standings', 'json', { force: "true" });
 
 
@@ -95,6 +92,7 @@ app.get("/api/news/:team", function (req, res) {
   app.get("/api/divisions", function (req, res) {
 
     fs.readFile('results/seasonal_standings-nfl-2018-2019-regular.json', 'utf8', function (err, data) {
+
       if (err) throw err;
       const filteredData = JSON.parse(data, null, 2);
 
@@ -241,11 +239,53 @@ app.use(require("./routes/htmlRoutes.js"));
     return data;
   }
 
-  db.sequelize.sync({force: false}).then(() => {
-    app.listen(PORT, () => {
-      console.log("==> 🌎  Listening on port %s. Visit http://localhost:%s/ in your browser.", PORT);
-    });
+
+  users = [];
+  connections = [];
+  
+  app.use(express.static("public"));
+  
+  app.get('/fanchat', function(req,res) {
+    res.sendFile(path.join(__dirname, './public/fanchat.html'));
   });
+  var server = require("http").createServer(app);
+  var io = require("socket.io").listen(server);
+  io.sockets.on('connection', function(socket){
+    connections.push(socket);
+    console.log('Connected: %s sockets connected', connections.length);
+  
+    // Disconnect
+    socket.on('disconnect', function(data) {
+      users.splice(users.indexOf(socket.username), 1);
+      updateUsernames();
+      connections.splice(connections.indexOf(socket), 1);
+      console.log('Disconnected: %s sockets connected', connections.length);
+    });
+  
+    // Send message
+    socket.on('send message', function(data) {
+      io.sockets.emit('new message', {msg: data, user: socket.username});
+    });
+  
+    // New User
+    socket.on('new user', function(data, callback) {
+      callback(true);
+      socket.username = data;
+      users.push(socket.username);
+      updateUsernames();
+    });
+  
+    function updateUsernames() {
+      io.sockets.emit('get users', users);
+    }
+  });
+  server.listen(process.env.PORT || 3000);
+  console.log("server running");
+  
+
+  // app.listen(PORT, function () {
+  //   console.log("App listening on PORT: " + PORT);
+  // });
 
 
 

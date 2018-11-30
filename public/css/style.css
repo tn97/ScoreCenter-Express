@@ -10,10 +10,11 @@ body {
   max-width: 1300px;
 }
 
-.signup, .login, .chat {
+.signup, .login, .fanchat {
   background: url(../photos/bills-crowd-edit.png);
   background-size: cover;
   background-repeat: no-repeat;
+  background-attachment: fixed;
   padding: 20px;
   height: auto;
 }
@@ -100,6 +101,8 @@ p.subject {
   font-family: 'Raleway', sans-serif;
 }
 
+
+
 .subject-div {
   max-height: 60px;
 }
@@ -168,6 +171,15 @@ textarea {
 
 .col-2 {
   width: 70px;
+}
+
+.online-users-div {
+  background: white;
+
+}
+
+#messageArea {
+  padding: 15px;
 }
 
 
@@ -293,6 +305,7 @@ h3 {
   font-weight: 700;
   color: #4e4e4e;
   text-transform: uppercase;
+  font-family: 'Orbitron', sans-serif;
 }
 
 h5 a {
@@ -558,7 +571,7 @@ h4 {
 }
 
 .chat-container {
-  width: 70%;
+  width: 80%;
 }
 
 input {
@@ -566,7 +579,7 @@ input {
 }
 
 form {
-  width: 85%;
+  width: 90%;
   margin: 0 auto;
 } 
 
@@ -647,4 +660,15 @@ h4 {
   padding: 10px;
   border: 0px solid #cc0000;
   
+}
+
+#chat {
+  height: 350px;
+  width: 100%;
+  background: white;
+}
+
+#chat div {
+  margin: 10px;
+  background: none !important;
 }
