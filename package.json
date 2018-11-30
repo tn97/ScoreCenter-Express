@@ -9,7 +9,14 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+<<<<<<< HEAD
     "express": "^4.16.4",
+=======
+    "datatables.net": "^1.10.19",
+    "datatables.net-dt": "^1.10.19",
+    "express": "^4.16.4",
+    "jquery": "^3.3.1",
+>>>>>>> 02361796543e514fc88d55256e31cdc34d801358
     "mysportsfeeds-node": "^2.0.1",
     "newsapi": "^2.4.0",
     "nfl_scores": "^0.1.0",
