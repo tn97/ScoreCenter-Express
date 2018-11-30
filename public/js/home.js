@@ -301,21 +301,7 @@ function titleCase(str) {
 
 
 
-const setRecords = () => {
- $.ajax({
-  method: "GET",
-  url: "/api/divisions"
- }).then((data) => {
-  // console.log(data)
 
-  data.forEach(team => {
-   // console.log(data)
-   let teamRef = team.name.toLowerCase();
-   teamData[teamRef]["record"] = `${team.wins} - ${team.losses} - ${team.ties}`;
-  })
-
- })
-}
 
 const setMatchups = () => {
  $.ajax({
