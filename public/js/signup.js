@@ -1,23 +1,25 @@
 $(document).ready(function () {
   // Getting references to our form and input
   const $signUpForm = $("form.signup");
-  const $emailInput = $("input#email-input");
+  const $usernameInput = $("input#username-input");
   const $passwordInput = $("input#password-input");
+  const $teamInput = $("input#team-input");
 
-  // When the signup button is clicked, we validate the email and password are not blank
+  // When the signup button is clicked, we validate the username and password are not blank
   $signUpForm.on("submit", function (event) {
     event.preventDefault();
 
     const formData = {
-      email: $emailInput.val().trim(),
-      password: $passwordInput.val().trim()
+      username: $usernameInput.val().trim(),
+      password: $passwordInput.val().trim(),
+      team: $teamInput.val().trim()
     };
     
-    // If we have an email and password, run the signUpUser function
+    // If we have an username and password, run the signUpUser function
     signUpUser(formData);
-    $emailInput.val("");
+    $usernameInput.val("");
     $passwordInput.val("");
-
+    $teamInput.val("");
   });
 
   // Does a post to the signup route. If successful, we are redirected to the members page

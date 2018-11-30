@@ -22,7 +22,7 @@ router.post("/signup", function (req, res) {
 
   db
     .User
-    .create({email: req.body.email, password: req.body.password})
+    .create({username: req.body.username, password: req.body.password, team: req.body.team})
     .then(function (userInfo) {
       // Upon successful signup, log user in
       req

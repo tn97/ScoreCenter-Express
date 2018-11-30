@@ -30,39 +30,15 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "./public")));
 
+app.use(session({ secret: "keyboard cat", resave: true, saveUninitialized: true }));
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.get("/team/:team", function (req, res) {
   res.sendFile(path.join(__dirname, "./public/team.html"));
   // res.sendFile(path.join(__dirname, "./public/css/team.style.css"));
 });
 
-app.use("/api", require("./routes/apiRoutes.js"));
-app.use(require("./routes/htmlRoutes.js"));
-
-app.get("/", function (req, res) {
-  res.sendFile(path.join(__dirname, "./public/login.html"));
-});
-
-app.get("/login", function (req, res) {
-  res.sendFile(path.join(__dirname, "./public/login.html"));
-});
-
-app.get("/signup", function (req, res) {
-  res.sendFile(path.join(__dirname, "./public/signup.html"));
-});
-
-
-app.get("/home", function (req, res) {
-  res.sendFile(path.join(__dirname, "./public/home.html"));
-});
-
-app.get("/fanchat", function (req, res) {
-  res.sendFile(path.join(__dirname, "./public/fanchat.html"));
-});
-
-app.get("/fanposts", function (req, res) {
-  res.sendFile(path.join(__dirname, "./public/fanposts.html"));
-});
 
 
 // Reads the file that gets created with the data called from the API
@@ -228,6 +204,12 @@ app.get("/api/news/:team", function (req, res) {
 
     })
   })
+
+  
+app.use("/api", require("./routes/apiRoutes.js"));
+app.use(require("./routes/htmlRoutes.js"));
+
+
 
 
 
