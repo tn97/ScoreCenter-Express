@@ -16,6 +16,7 @@
     "mysportsfeeds-node": "^2.0.1",
     "newsapi": "^2.4.0",
     "nfl_scores": "^0.1.0",
-    "node-nfl-api": "^1.0.3"
+    "node-nfl-api": "^1.0.3",
+    "socket.io": "^2.2.0"
   }
 }

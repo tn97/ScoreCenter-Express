@@ -14,6 +14,12 @@
   <link rel="stylesheet" href="./css/style.css">
 
   <title>Fan Chat</title>
+  <style>
+    #userFormArea{
+      display: none;
+    }
+
+    </style>
 
 </head>
 
@@ -21,7 +27,8 @@
 
   <nav class="navbar navbar-expand-lg navbar-light d-flex">
     <a class="navbar-brand mr-auto" href="#"><img class="logo" src="./photos/scorecenter-logo.png"></a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup"
+      aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
@@ -96,7 +103,7 @@
   <hr class="secondary-hr">
   <hr class="white-hr">
 
-  <div class="container chat">
+  <!-- <div class="container chat">
 
     <div class="row align-items-center mb-3">
       <div class="chat-container p-2">
@@ -120,9 +127,67 @@
       </div>
 
       </div>
+  </div> -->
+
+  <!-- begin username area -->
+  <div class="fanchat">
+
+    <div class="container-for-chat chat-container">
+
+      <div class="container">
+        <div id="userFormArea" class="row">
+          <div class="col-md-12">
+            <form id="userForm">
+              <div class="form-group">
+                <label>Enter Username:</label>
+                <input class="form-control" id="username">
+                <br />
+                <input type="submit" class="btn btn-primary" value="Login">
+
+              </div>
+          </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- end username area -->
+
+      <div id="messageArea" class="row">
+        <h2 class="col-md-12 text-center mt-2 mb-4">SCORECENTER FAN CHAT</h2>
+
+        <div class="col-md-4 message-div online-users-div">
+          <div>
+            <h3 class="text-center"> Online Users</h3>
+            <hr class="black-hr mt-2">
+            <ul class="list-group" id="users"></ul>
+          </div>
+        </div>
+
+        <!-- begin chat enter area -->
+        <div class="col-md-8">
+          <div class="chat message-div" id="chat"></div>
+          <form id="messageForm">
+
+
+
+            <div class="form-group">
+              <h3><label>Enter Message:</label></h3>
+              <textarea class="form-control message-div" id="message"></textarea>
+              <br />
+              <button type="submit" class="btn btn-primary btn-sm chat-submit p-2 mt-2" id="submit-chat">Submit</button>
+
+            </div>
+
+
+
+          </form>
+        </div>
+      </div>
+      <!-- end chat enter area -->
+    </div>
   </div>
 
-
+  </div>
   <hr class="white-hr">
   <hr class="secondary-hr">
   <hr class="short-white-hr">
@@ -140,7 +205,14 @@
   <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
   <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script> -->
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
   <script src="/js/fanchat.js"></script>
+  <!-- <script src="/js/testchat.js"></script> -->
+
+
+</body>
+
+</html>
 
 </body>
 
