@@ -3,12 +3,13 @@
 const session = require("express-session");
 // Requiring passport as we've configured it
 const passport = require("./config/passport");
-
+const fs = require("fs");
 
 var $ = require('jquery');
 // var dt      = require( 'datatables.net' )();
 // var buttons = require( 'datatables.net-buttons' )();
-const NewsAPI = require('newsapi');
+const NewsApi = require('newsapi');
+const newsapi = new NewsApi("4064b95643d24a48a9b28a7ad95f81e4")
 var MySportsFeeds = require("mysportsfeeds-node");
 var msf = new MySportsFeeds("2.0", true);
 msf.authenticate("3c05ee98-ad49-4e16-b24e-46c9b5", "MYSPORTSFEEDS");
@@ -56,6 +57,8 @@ app.get("/team/:team", function (req, res) {
 
 
 app.get("/api/news/:team", function (req, res) {
+
+
 
   if (req.params.team === "all") {
     newsapi.v2.topHeadlines({
