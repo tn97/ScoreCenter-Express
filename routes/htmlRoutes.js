@@ -43,8 +43,12 @@ router.get("/fanchat", isAuthenticated, function (req, res) {
   res.sendFile(path.join(__dirname, "../public/fanchat.html"));
 });
 
-router.get("/fanpost", isAuthenticated, function (req, res) {
-  res.sendFile(path.join(__dirname, "../public/fanpost.html"));
+router.get("/fanposts", isAuthenticated, function (req, res) {
+  res.sendFile(path.join(__dirname, "../public/fanposts.html"));
+});
+
+router.get("/team", isAuthenticated, function (req, res) {
+  res.sendFile(path.join(__dirname, "../public/team.html"));
 });
 
 router.get("/login", function(req, res) {
