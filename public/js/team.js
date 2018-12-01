@@ -1,338 +1,652 @@
 
-//variable for url to get team name
-const url = location.href.split("/");
-const team = url[url.length - 1]
-const teamData = {
-  cardinals: {
-    primary: "#97233F",
-    secondary: "#000000",
-    city: "arizona",
-    name: "cardinals",
-    abbr: "ARI"
-  },
 
-  falcons: {
-    primary: "#A71930",
-    secondary: "#000000",
-    city: "atlanta",
-    name: "falcons",
-    abbr: "ATL"
-  },
+const dataCheck = (teamKey, searchKey) => {
+  const checkedData = [];
+  teamData.forEach((team, i) => {
+    if (searchKey === team[teamKey]) {
+      checkedData.push(teamData[i]);
+    }
+  })
 
-  ravens: {
-    primary: "#241773",
-    secondary: "#000000",
-    city: "baltimore",
-    name: "ravens",
-    abbr: "BAL"
-  },
+  return checkedData[0];
+}
 
-  bills: {
-    primary: "#00338D",
-    secondary: "#C60C30",
-    city: "buffalo",
-    name: "bills",
-    abbr: "BUF"
-  },
-
-  panthers: {
-    primary: "#0085CA",
-    secondary: "#101820",
-    city: "carolina",
-    name: "panthers",
-    abbr: "CAR"
-  },
-
-  bears: {
-    primary: "#0B162A",
-    secondary: "#C83803",
-    city: "chicago",
-    name: "bears",
-    abbr: "CHI"
-  },
-
-  bengals: {
-    primary: "#FB4F14",
-    secondary: "#000000",
-    city: "cincinnati",
-    name: "bengals",
-    abbr: "CIN"
-  },
-
-  browns: {
-    primary: "#311D00",
-    secondary: "#FF3C00",
-    city: "cleveland",
-    name: "browns",
-    abbr: "CLE"
-  },
-
-  cowboys: {
-    primary: "#003594",
-    secondary: "#041E42",
-    city: "dallas",
-    name: "cowboys",
-    abbr: "DAL"
-  },
-
-  broncos: {
-    primary: "#FB4F14",
-    secondary: "#002244",
-    city: "denver",
-    name: "broncos",
-    abbr: "DEN"
-  },
-
-  lions: {
-    primary: "#0076B6",
-    secondary: "#B0B7BC",
-    city: "detroit",
-    name: "lions",
-    abbr: "DET"
-  },
-
-  packers: {
-    primary: "#203731",
-    secondary: "#FFB612",
-    city: "green bay",
-    name: "packers",
-    abbr: "GB"
-  },
-
-  texans: {
-    primary: "#03202F",
-    secondary: "#A71930",
-    city: "houston",
-    name: "texans",
-    abbr: "HOU"
-  },
-
-  colts: {
-    primary: "#002C5F",
-    secondary: "#A2AAAD",
-    city: "indianapolis",
-    name: "colts",
-    abbr: "IND"
-  },
-
-  jaguars: {
-    primary: "#101820",
-    secondary: "#D7A22A",
-    city: "jacksonville",
-    name: "jaguars",
-    abbr: "JAX"
-  },
-
-  chiefs: {
-    primary: "#E31837",
-    secondary: "#FFB81C",
-    city: "kansas city",
-    name: "chiefs",
-    abbr: "KC"
-  },
-
-  chargers: {
-    primary: "#002A5E",
-    secondary: "#FFC20E",
-    city: "los angeles",
-    name: "chargers",
-    abbr: "LAC"
-  },
-
-  rams: {
-    primary: "#002244",
-    secondary: "#866D4B",
-    city: "los angeles",
-    name: "rams",
-    abbr: "LA"
-  },
-
-  dolphins: {
-    primary: "#008E97",
-    secondary: "#F26A24",
-    city: "miami",
-    name: "dolphins",
-    abbr: "MIA"
-  },
-
-  vikings: {
-    primary: "#4F2683",
-    secondary: "#FFC62F",
-    city: "minnesota",
-    name: "vikings",
-    abbr: "MIN"
-  },
-
-  patriots: {
-    primary: "#002244",
-    secondary: "#C60C30",
-    city: "new england",
-    name: "patriots",
-    abbr: "NE"
-  },
-
-  saints: {
-    primary: "#D3BC8D",
-    secondary: "#101820",
-    city: "new orleans",
-    name: "saints",
-    abbr: "NO"
-  },
-
-  giants: {
-    primary: "#0B2265",
-    secondary: "#A71930",
-    city: "new york",
-    name: "giants",
-    abbr: "NYG"
-  },
-
-  jets: {
-    primary: "#003F2D",
-    secondary: "#FFFFFF",
-    city: "new york",
-    name: "jets",
-    abbr: "NYJ"
-  },
-
-  raiders: {
-    primary: "#000000",
-    secondary: "#A5ACAF",
-    city: "oakland",
-    name: "raiders",
-    abbr: "OAK"
-  },
-
-  eagles: {
-    primary: "#004C54",
-    secondary: "#A5ACAF",
-    city: "philadelphia",
-    name: "eagles",
-    abbr: "PHI"
-  },
-
-  steelers: {
-    primary: "#FFB612",
-    secondary: "#101820",
-    city: "pittsburgh",
-    name: "steelers",
-    abbr: "PIT"
-  },
-
-  niners: {
-    primary: "#AA0000",
-    secondary: "#B3995D",
-    city: "san francisco",
-    name: "49ers",
-    abbr: "SF"
-  },
-
-  seahawks: {
-    primary: "#002244",
-    secondary: "#69BE28",
-    city: "seattle",
-    name: "seahawks",
-    abbr: "SEA"
-  },
-
-  buccaneers: {
-    primary: "#D50A0A",
-    secondary: "#FF7900",
-    city: "tampa bay",
-    name: "buccaneers",
-    abbr: "TB"
-  },
-
-  titans: {
-    primary: "#002A5C",
-    secondary: "#4495D1",
-    city: "tennessee",
-    name: "titans",
-    abbr: "TEN"
-  },
-
-  redskins: {
-    primary: "#773141",
-    secondary: "#FFB612",
-    city: "washington",
-    name: "redskins",
-    abbr: "WAS"
+const titleCase = (str) => {
+  str = str.toLowerCase().split(' ');
+  for (var i = 0; i < str.length; i++) {
+    str[i] = str[i].charAt(0).toUpperCase() + str[i].slice(1);
   }
+  return str.join(' ');
 }
 
-const teamNames = {};
+let currentTeamData = {}
 
-for (let team in teamData) {
-  for (let property in teamData[team]) {
-   abbreviation = teamData[team].abbr;
-   teamNames[abbreviation] = {
-    full: titleCase(teamData[team].city + " " + teamData[team].name),
-    part: teamData[team].name
-   }
- }
-}
+const teamData = [
+  {
+    teamCity: "arizona",
+    teamNameLower: "cardinals",
+    teamPrimaryCSS: "#97233F",
+    teamSecondaryCSS: "#000000",
+    teamAbbr: "ARI",
+    teamGametime: "",
+    teamLogo: "",
+    teamDivName: "",
+    teamDivRank: "",
+    teamIsHome: "",
+    teamProperName: "",
+    teamLowerFull: "",
+    teamCurrentScore: "",
+    teamMatchup: "",
+    teamRecord: "",
+    teamJumboPhoto: "",
+  },
+  {
+    teamCity: "atlanta",
+    teamNameLower: "falcons",
+    teamPrimaryCSS: "#A71930",
+    teamSecondaryCSS: "#000000",
+    teamAbbr: "ATL",
+    teamGametime: "",
+    teamLogo: "",
+    teamDivName: "",
+    teamDivRank: "",
+    teamIsHome: "",
+    teamProperName: "",
+    teamLowerFull: "",
+    teamCurrentScore: "",
+    teamMatchup: "",
+    teamRecord: "",
+    teamJumboPhoto: "",
+  },
+  {
+    teamCity: "baltimore",
+    teamNameLower: "ravens",
+    teamPrimaryCSS: "#241773",
+    teamSecondaryCSS: "#000000",
+    teamAbbr: "BAL",
+    teamGametime: "",
+    teamLogo: "",
+    teamDivName: "",
+    teamDivRank: "",
+    teamIsHome: "",
+    teamProperName: "",
+    teamLowerFull: "",
+    teamCurrentScore: "",
+    teamMatchup: "",
+    teamRecord: "",
+    teamJumboPhoto: "",
+  },
+  {
+    teamCity: "buffalo",
+    teamNameLower: "bills",
+    teamPrimaryCSS: "#00338D",
+    teamSecondaryCSS: "#C60C30",
+    teamAbbr: "BUF",
+    teamGametime: "",
+    teamLogo: "",
+    teamDivName: "",
+    teamDivRank: "",
+    teamIsHome: "",
+    teamProperName: "",
+    teamLowerFull: "",
+    teamCurrentScore: "",
+    teamMatchup: "",
+    teamRecord: "",
+    teamJumboPhoto: "",
+  },
+  {
+    teamCity: "carolina",
+    teamNameLower: "panthers",
+    teamPrimaryCSS: "#0085CA",
+    teamSecondaryCSS: "#101820",
+    teamAbbr: "CAR",
+    teamGametime: "",
+    teamLogo: "",
+    teamDivName: "",
+    teamDivRank: "",
+    teamIsHome: "",
+    teamProperName: "",
+    teamLowerFull: "",
+    teamCurrentScore: "",
+    teamMatchup: "",
+    teamRecord: "",
+    teamJumboPhoto: "",
+  },
+  {
+    teamCity: "chicago",
+    teamNameLower: "bears",
+    teamPrimaryCSS: "#0B162A",
+    teamSecondaryCSS: "#C83803",
+    teamAbbr: "CHI",
+    teamGametime: "",
+    teamLogo: "",
+    teamDivName: "",
+    teamDivRank: "",
+    teamIsHome: "",
+    teamProperName: "",
+    teamLowerFull: "",
+    teamCurrentScore: "",
+    teamMatchup: "",
+    teamRecord: "",
+    teamJumboPhoto: "",
+  },
+  {
+    teamCity: "cincinnati",
+    teamNameLower: "bengals",
+    teamPrimaryCSS: "#FB4F14",
+    teamSecondaryCSS: "#000000",
+    teamAbbr: "CIN",
+    teamGametime: "",
+    teamLogo: "",
+    teamDivName: "",
+    teamDivRank: "",
+    teamIsHome: "",
+    teamProperName: "",
+    teamLowerFull: "",
+    teamCurrentScore: "",
+    teamMatchup: "",
+    teamRecord: "",
+    teamJumboPhoto: "",
+  },
+  {
+    teamCity: "cleveland",
+    teamNameLower: "browns",
+    teamPrimaryCSS: "#311D00",
+    teamSecondaryCSS: "#FF3C00",
+    teamAbbr: "CLE",
+    teamGametime: "",
+    teamLogo: "",
+    teamDivName: "",
+    teamDivRank: "",
+    teamIsHome: "",
+    teamProperName: "",
+    teamLowerFull: "",
+    teamCurrentScore: "",
+    teamMatchup: "",
+    teamRecord: "",
+    teamJumboPhoto: "",
+  },
+  {
+    teamCity: "dallas",
+    teamNameLower: "cowboys",
+    teamPrimaryCSS: "#003594",
+    teamSecondaryCSS: "#041E42",
+    teamAbbr: "DAL",
+    teamGametime: "",
+    teamLogo: "",
+    teamDivName: "",
+    teamDivRank: "",
+    teamIsHome: "",
+    teamProperName: "",
+    teamLowerFull: "",
+    teamCurrentScore: "",
+    teamMatchup: "",
+    teamRecord: "",
+    teamJumboPhoto: "",
+  },
+  {
+    teamCity: "denver",
+    teamNameLower: "broncos",
+    teamPrimaryCSS: "#FB4F14",
+    teamSecondaryCSS: "#002244",
+    teamAbbr: "DEN",
+    teamGametime: "",
+    teamLogo: "",
+    teamDivName: "",
+    teamDivRank: "",
+    teamIsHome: "",
+    teamProperName: "",
+    teamLowerFull: "",
+    teamCurrentScore: "",
+    teamMatchup: "",
+    teamRecord: "",
+    teamJumboPhoto: "",
+  },
+  {
+    teamCity: "detroit",
+    teamNameLower: "lions",
+    teamPrimaryCSS: "#0076B6",
+    teamSecondaryCSS: "#B0B7BC",
+    teamAbbr: "DET",
+    teamGametime: "",
+    teamLogo: "",
+    teamDivName: "",
+    teamDivRank: "",
+    teamIsHome: "",
+    teamProperName: "",
+    teamLowerFull: "",
+    teamCurrentScore: "",
+    teamMatchup: "",
+    teamRecord: "",
+    teamJumboPhoto: "",
+  }, {
+    teamCity: "green bay",
+    teamNameLower: "packers",
+    teamPrimaryCSS: "#203731",
+    teamSecondaryCSS: "#FFB612",
+    teamAbbr: "GB",
+    teamGametime: "",
+    teamLogo: "",
+    teamDivName: "",
+    teamDivRank: "",
+    teamIsHome: "",
+    teamProperName: "",
+    teamLowerFull: "",
+    teamCurrentScore: "",
+    teamMatchup: "",
+    teamRecord: "",
+    teamJumboPhoto: "",
+  },
+  {
+    teamCity: "houston",
+    teamNameLower: "texans",
+    teamPrimaryCSS: "#03202F",
+    teamSecondaryCSS: "#A71930",
+    teamAbbr: "HOU",
+    teamGametime: "",
+    teamLogo: "",
+    teamDivName: "",
+    teamDivRank: "",
+    teamIsHome: "",
+    teamProperName: "",
+    teamLowerFull: "",
+    teamCurrentScore: "",
+    teamMatchup: "",
+    teamRecord: "",
+    teamJumboPhoto: "",
+  },
+  {
+    teamCity: "indianapolis",
+    teamNameLower: "colts",
+    teamPrimaryCSS: "#002C5F",
+    teamSecondaryCSS: "#A2AAAD",
+    teamAbbr: "IND",
+    teamGametime: "",
+    teamLogo: "",
+    teamDivName: "",
+    teamDivRank: "",
+    teamIsHome: "",
+    teamProperName: "",
+    teamLowerFull: "",
+    teamCurrentScore: "",
+    teamMatchup: "",
+    teamRecord: "",
+    teamJumboPhoto: "",
+  },
+  {
+    teamCity: "jacksonville",
+    teamNameLower: "jaguars",
+    teamPrimaryCSS: "#101820",
+    teamSecondaryCSS: "#D7A22A",
+    teamAbbr: "JAX",
+    teamGametime: "",
+    teamLogo: "",
+    teamDivName: "",
+    teamDivRank: "",
+    teamIsHome: "",
+    teamProperName: "",
+    teamLowerFull: "",
+    teamCurrentScore: "",
+    teamMatchup: "",
+    teamRecord: "",
+    teamJumboPhoto: "",
+  }, {
 
-// $(document).ready(function () {
-//   $('#roster-table').DataTable();
-// });
+    teamCity: "kansas city",
+    teamNameLower: "chiefs",
+    teamPrimaryCSS: "#E31837",
+    teamSecondaryCSS: "#FFB81C",
+    teamAbbr: "KC",
+    teamGametime: "",
+    teamLogo: "",
+    teamDivName: "",
+    teamDivRank: "",
+    teamIsHome: "",
+    teamProperName: "",
+    teamLowerFull: "",
+    teamCurrentScore: "",
+    teamMatchup: "",
+    teamRecord: "",
+    teamJumboPhoto: "",
+  },
+  {
+    teamCity: "los angeles",
+    teamNameLower: "chargers",
+    teamPrimaryCSS: "#002A5E",
+    teamSecondaryCSS: "#FFC20E",
+    teamAbbr: "LAC",
+    teamGametime: "",
+    teamLogo: "",
+    teamDivName: "",
+    teamDivRank: "",
+    teamIsHome: "",
+    teamProperName: "",
+    teamLowerFull: "",
+    teamCurrentScore: "",
+    teamMatchup: "",
+    teamRecord: "",
+    teamJumboPhoto: "",
+  }, {
 
-const setTeamPage = () => {
+    teamCity: "los angeles",
+    teamNameLower: "rams",
+    teamPrimaryCSS: "#002244",
+    teamSecondaryCSS: "#866D4B",
+    teamAbbr: "LA",
+    teamGametime: "",
+    teamLogo: "",
+    teamDivName: "",
+    teamDivRank: "",
+    teamIsHome: "",
+    teamProperName: "",
+    teamLowerFull: "",
+    teamCurrentScore: "",
+    teamMatchup: "",
+    teamRecord: "",
+    teamJumboPhoto: "",
+  },
+  {
+    teamCity: "miami",
+    teamNameLower: "dolphins",
+    teamPrimaryCSS: "#008E97",
+    teamSecondaryCSS: "#F26A24",
+    teamAbbr: "MIA",
+    teamGametime: "",
+    teamLogo: "",
+    teamDivName: "",
+    teamDivRank: "",
+    teamIsHome: "",
+    teamProperName: "",
+    teamLowerFull: "",
+    teamCurrentScore: "",
+    teamMatchup: "",
+    teamRecord: "",
+    teamJumboPhoto: "",
+  },
+  {
+    teamCity: "minnesota",
+    teamNameLower: "vikings",
+    teamPrimaryCSS: "#4F2683",
+    teamSecondaryCSS: "#FFC62F",
+    teamAbbr: "MIN",
+    teamGametime: "",
+    teamLogo: "",
+    teamDivName: "",
+    teamDivRank: "",
+    teamIsHome: "",
+    teamProperName: "",
+    teamLowerFull: "",
+    teamCurrentScore: "",
+    teamMatchup: "",
+    teamRecord: "",
+    teamJumboPhoto: "",
+  }, {
+    teamCity: "new england",
+    teamNameLower: "patriots",
+    teamPrimaryCSS: "#002244",
+    teamSecondaryCSS: "#C60C30",
+    teamAbbr: "NE",
+    teamGametime: "",
+    teamLogo: "",
+    teamDivName: "",
+    teamDivRank: "",
+    teamIsHome: "",
+    teamProperName: "",
+    teamLowerFull: "",
+    teamCurrentScore: "",
+    teamMatchup: "",
+    teamRecord: "",
+    teamJumboPhoto: "",
+  }, {
 
-  $("#team-headline").text(team)
+    teamCity: "new orleans",
+    teamNameLower: "saints",
+    teamPrimaryCSS: "#D3BC8D",
+    teamSecondaryCSS: "#101820",
+    teamAbbr: "NO",
+    teamGametime: "",
+    teamLogo: "",
+    teamDivName: "",
+    teamDivRank: "",
+    teamIsHome: "",
+    teamProperName: "",
+    teamLowerFull: "",
+    teamCurrentScore: "",
+    teamMatchup: "",
+    teamRecord: "",
+    teamJumboPhoto: "",
+  },
+  {
+    teamCity: "new york",
+    teamNameLower: "giants",
+    teamPrimaryCSS: "#0B2265",
+    teamSecondaryCSS: "#A71930",
+    teamAbbr: "NYG",
+    teamGametime: "",
+    teamLogo: "",
+    teamDivName: "",
+    teamDivRank: "",
+    teamIsHome: "",
+    teamProperName: "",
+    teamLowerFull: "",
+    teamCurrentScore: "",
+    teamMatchup: "",
+    teamRecord: "",
+    teamJumboPhoto: "",
+  },
+  {
+    teamCity: "new york",
+    teamNameLower: "jets",
+    teamPrimaryCSS: "#003F2D",
+    teamSecondaryCSS: "#FFFFFF",
+    teamAbbr: "NYJ",
+    teamGametime: "",
+    teamLogo: "",
+    teamDivName: "",
+    teamDivRank: "",
+    teamIsHome: "",
+    teamProperName: "",
+    teamLowerFull: "",
+    teamCurrentScore: "",
+    teamMatchup: "",
+    teamRecord: "",
+    teamJumboPhoto: "",
+  },
+  {
+    teamCity: "oakland",
+    teamNameLower: "raiders",
+    teamPrimaryCSS: "#000000",
+    teamSecondaryCSS: "#A5ACAF",
+    teamAbbr: "OAK",
+    teamGametime: "",
+    teamLogo: "",
+    teamDivName: "",
+    teamDivRank: "",
+    teamIsHome: "",
+    teamProperName: "",
+    teamLowerFull: "",
+    teamCurrentScore: "",
+    teamMatchup: "",
+    teamRecord: "",
+    teamJumboPhoto: "",
+  },
+  {
+    teamCity: "philadelphia",
+    teamNameLower: "eagles",
+    teamPrimaryCSS: "#004C54",
+    teamSecondaryCSS: "#A5ACAF",
+    teamAbbr: "PHI",
+    teamGametime: "",
+    teamLogo: "",
+    teamDivName: "",
+    teamDivRank: "",
+    teamIsHome: "",
+    teamProperName: "",
+    teamLowerFull: "",
+    teamCurrentScore: "",
+    teamMatchup: "",
+    teamRecord: "",
+    teamJumboPhoto: "",
+  },
+  {
+    teamCity: "pittsburgh",
+    teamNameLower: "steelers",
+    teamPrimaryCSS: "#FFB612",
+    teamSecondaryCSS: "#101820",
+    teamAbbr: "PIT",
+    teamGametime: "",
+    teamLogo: "",
+    teamDivName: "",
+    teamDivRank: "",
+    teamIsHome: "",
+    teamProperName: "",
+    teamLowerFull: "",
+    teamCurrentScore: "",
+    teamMatchup: "",
+    teamRecord: "",
+    teamJumboPhoto: "",
+  }, {
 
-  //variable for the root class set for CSS Variables
+    teamCity: "san francisco",
+    teamNameLower: "niners",
+    teamPrimaryCSS: "#AA0000",
+    teamSecondaryCSS: "#B3995D",
+    teamAbbr: "SF",
+    teamGametime: "",
+    teamLogo: "",
+    teamDivName: "",
+    teamDivRank: "",
+    teamIsHome: "",
+    teamProperName: "",
+    teamLowerFull: "",
+    teamCurrentScore: "",
+    teamMatchup: "",
+    teamRecord: "",
+    teamJumboPhoto: "",
+  },
+  {
+    teamCity: "seattle",
+    teamNameLower: "seahawks",
+    teamPrimaryCSS: "#002244",
+    teamSecondaryCSS: "#69BE28",
+    teamAbbr: "SEA",
+    teamGametime: "",
+    teamLogo: "",
+    teamDivName: "",
+    teamDivRank: "",
+    teamIsHome: "",
+    teamProperName: "",
+    teamLowerFull: "",
+    teamCurrentScore: "",
+    teamMatchup: "",
+    teamRecord: "",
+    teamJumboPhoto: "",
+  }, {
+
+    teamCity: "tampa bay",
+    teamNameLower: "buccaneers",
+    teamPrimaryCSS: "#D50A0A",
+    teamSecondaryCSS: "#FF7900",
+    teamAbbr: "TB",
+    teamGametime: "",
+    teamLogo: "",
+    teamDivName: "",
+    teamDivRank: "",
+    teamIsHome: "",
+    teamProperName: "",
+    teamLowerFull: "",
+    teamCurrentScore: "",
+    teamMatchup: "",
+    teamRecord: "",
+    teamJumboPhoto: "",
+  },
+  {
+    teamCity: "tennessee",
+    teamNameLower: "titans",
+    teamPrimaryCSS: "#002A5C",
+    teamSecondaryCSS: "#4495D1",
+    teamAbbr: "TEN",
+    teamGametime: "",
+    teamLogo: "",
+    teamDivName: "",
+    teamDivRank: "",
+    teamIsHome: "",
+    teamProperName: "",
+    teamLowerFull: "",
+    teamCurrentScore: "",
+    teamMatchup: "",
+    teamRecord: "",
+    teamJumboPhoto: "",
+  },
+  {
+    teamCity: "washington",
+    teamNameLower: "redskins",
+    teamPrimaryCSS: "#773141",
+    teamSecondaryCSS: "#FFB612",
+    teamAbbr: "WAS",
+    teamGametime: "",
+    teamLogo: "",
+    teamDivName: "",
+    teamDivRank: "",
+    teamIsHome: "",
+    teamProperName: "",
+    teamLowerFull: "",
+    teamCurrentScore: "",
+    teamMatchup: "",
+    teamRecord: "",
+    teamJumboPhoto: "",
+  }
+];
+
+//SET INDIVIDUAL NFL TEAM DATA DETAILS
+(function () {
+  teamData.forEach(squad => {
+    squad.teamLowerFull = `${squad.teamCity} ${squad.teamNameLower}`;
+    squad.teamProperName = `${titleCase(squad.teamCity)} ${titleCase(squad.teamNameLower)}`;
+    squad.teamLowerPart = `${titleCase(squad.teamNameLower).toLowerCase()}`;
+    squad.teamJumboPhoto = `/photos/$${squad.teamNameLower}.png`;
+    squad.teamLogo = `/photos/${squad.teamNameLower}.gif`;
+  });
+})();
+
+//SETUP TEAM PAGE (CSS, DIVISION, MATCHUP, ROSTER)
+(function () {
+  const url = location.href.split("/");
+  const team = url[url.length - 1]
   const root = document.querySelector(':root');
 
-  //assign and set primary and secondary colors from teamData object based on team
-  const $primaryColor = teamData[team].primary;
-  const $secondaryColor = teamData[team].secondary;
-  root.style.setProperty('--primary-color', $primaryColor)
-  root.style.setProperty('--secondary-color', $secondaryColor)
+  //SETUP CURRENTTEAMDATA OBJECT
+  teamData.forEach((squad, i) => {
+    if (squad.teamNameLower === team) {
+      currentTeamData = squad;
+    }
+  });
 
-  //changing image based on team
-  const $jumboImage = `/photos/$${team}.png`
-  $(".jumbo-image").attr("src", $jumboImage);
+  //if not home
+  if (team !== "home") {
 
-  $("#teamCity").text(teamData[team].city.toUpperCase())
-  $("#teamName").text(teamData[team].name.toUpperCase())
+    //assign and set primary and secondary colors from teamData object based on team
+    $("#team-headline").text(team)
 
+    root.style.setProperty('--primary-color', currentTeamData.teamPrimaryCSS)
+    root.style.setProperty('--secondary-color', currentTeamData.teamSecondaryCSS)
 
+    //changing image based on team
+    $(".jumbo-image").attr("src", currentTeamData.teamJumboPhoto);
+    $("#teamCity").text(currentTeamData.teamCity.toUpperCase())
+    const niners = team === "niners" ? "49ERS" : team.toUpperCase()
+    $("#teamName").text(niners)
 
-}
+    console.log(currentTeamData.teamLowerFull)
 
+    $.ajax({
+      url: "/api/news/" + currentTeamData.teamLowerFull,
+      method: "GET"
+    }).then(function (data) {
 
-setTeamPage();
+      const teamNewsArray = [];
 
-
-const setTeamNews = () => {
-
-  const teamName = teamData[team].city + " " + teamData[team].name;
-  // console.log(teamData[team].name)
-  $.ajax({
-    url: "/api/news/" + teamName,
-    method: "GET"
-  }).then(function (data) {
-    
-    // console.log(data.articles)
-    
-    
-
-    // const teamProper = teamName.split(" ")[1].charAt(0).toUpperCase() + teamName.split(" ")[1].slice(1)
-
-    // console.log(teamProper)
-    // const filteredArticles = data.articles.filter(article => {
-      // return article.title.includes(teamProper) && article.urlToImage && article.source.id !== "bleacher-report" && article.source.id !== "usa-today";
-      // return article.description.includes(teamProper) && article.source.name !== "Nownews.com" && article.source.name !== "USA Today";
-      // return (article.description.includes(teamProper) || article.title.includes(teamProper)) && article.urlToImage;
-      // return article.urlToImage;
-      // return article.title.includes(teamProper) && article.urlToImage;
-    // })
-
-    // console.log(filteredArticles)
-
-    const teamNewsArray = [];
-
-    data.articles.forEach((article) => {
+      data.articles.forEach((article) => {
 
         teamNewsArray.push(
           {
@@ -342,252 +656,235 @@ const setTeamNews = () => {
             "source": article.source.name,
             "description": article.description
           });
-        })
+      })
 
+      for (let x = 0; x < $(".article-pic-left").length; x++) {
+        $(".text")[x].innerText = teamNewsArray[x].title;
+        $(".article-pic-left")[x].src = teamNewsArray[x].urlToImage;
+      }
 
-
-
-
-    // console.log(teamNewsArray)
-
-
-
-    for (let x = 0; x < $(".article-pic-left").length; x++) {
-      $(".text")[x].innerText = teamNewsArray[x].title;
-      $(".article-pic-left")[x].src = teamNewsArray[x].urlToImage;
-    }
-
-    $(".article-pic-left").on("error", function() {
-      $(this).attr('src', `/photos/$${team}.png`);
-    });
-
-
-
-
-  })
-
-
-}
-
-setTeamNews();
-
-
-
-
-const setRoster = () => {
-  const teamAbbr = teamData[team].abbr;
-  $.ajax({
-        url: "/api/roster/" + teamAbbr,
-        method: "GET"
-      }).then(function (data) {
-    // console.log(data)
-    data.forEach(player => {
-      const $tableRow = $("<tr>");
-      const $jerseyNumber = $("<td>").text(player.jerseyNumber);
-      const $firstName = $("<td>").text(player.firstName);
-      const $lastName = $("<td>").text(player.lastName);
-      const $primaryPosition = $("<td>").text(player.primaryPosition);
-      const $height = $("<td>").text(player.height);
-      const $weight = $("<td>").text(player.weight);
-      const $age = $("<td>").text(player.age);
-
-      $tableRow.append($jerseyNumber, $firstName, $lastName, $primaryPosition, $height, $weight, $age)
-
-      // $("tbody > tr").empty();
-      $("#roster-table > tbody").append($tableRow)
-
+      $(".article-pic-left").on("error", function () {
+        $(this).attr('src', `/photos/$${team}.png`);
+      });
     })
-
-
-
-
-  })
-}
-
-
-const setRecords = () => {
-  $.ajax({
-   method: "GET",
-   url: "/api/divisions"
-  }).then((data) => {
-   // console.log(data)
- 
-   data.forEach(team => {
-    // console.log(data)
-    let teamRef = team.name.toLowerCase();
-    teamData[teamRef]["record"] = `${team.wins} - ${team.losses} - ${team.ties}`;
-   })
- 
-  })
- }
-
-const setMatchups = () => {
-
-
-
-
+  };
 
   $.ajax({
-   url: "/api/matchups",
-   method: "GET"
+    method: "GET",
+    url: "/api/divisions"
   }).then(function (data) {
 
-   // console.log(data);
-   const teamAbbr = teamData[team].abbr;
 
-   const filteredData = data.filter(matchup => {
-     
-     return matchup.awayTeam === teamAbbr || matchup.homeTeam === teamAbbr
+    data.forEach((squad, i) => {
+
+
+      if (currentTeamData.teamNameLower === squad.name.toLowerCase()) {
+        currentTeamData.teamDivName = squad.divisionName;
+        currentTeamData.teamDivRank = squad.divisionRank;
+      }
+
     })
-    console.log(filteredData)
 
-    const homeAbbr = filteredData[0].homeTeam;
-    const awayAbbr = filteredData[0].awayTeam;
+    const rivals = [];
 
-    
-    if (filteredData[0].awayScore === null || filteredData[0].homeScore === null) {
-      filteredData[0].awayScore = 0;
-      filteredData[0].homeScore = 0;
-    }
-    
-    console.log(filteredData[0].homeScore)
+    data.forEach((squad, i) => {
+      teamData[i].teamRecord = `${squad.wins} - ${squad.losses} - ${squad.ties}`;
+      teamData[i].teamDivRank = squad.divisionRank;
+      teamData[i].teamDivName = squad.divisionName;
 
-   const homeTeamName = abbrToName(filteredData[0].homeTeam).split(" ")[1].toLowerCase();
-   const awayTeamName = abbrToName(filteredData[0].awayTeam).split(" ")[1].toLowerCase();
+      if (currentTeamData.teamDivName === squad.divisionName) {
+        rivals.push(teamData[i])
+
+      }
+    })
 
 
-  //  console.log(homeTeamName)
- 
-   const $homeTeam = titleCase(abbrToName(filteredData[0].homeTeam))
-    const $awayTeam = titleCase(abbrToName(filteredData[0].awayTeam))
-
-console.log(teamData[teamNames[awayAbbr].part]["record"])
+    const sortedRivals = rivals.sort((b, a) => { return b.teamDivRank - a.teamDivRank });
 
 
-    let $matchup = `        
-    <div class="matchup-row">
-    <div class="awayTeam">
-      <div class="record mb-2">
-        <p class="text-center" id="record">${teamData[teamNames[awayAbbr].part]["record"]}</p>
-      </div>
-      <div class="team mb-2">
-        <div class="team-logo mx-auto">
-          <img class="matchup-logo" src="/photos/${awayTeamName}.gif">
-        </div>
-      </div>
-      <div class="teamName mb-1">
-          <p class="text-center" id="team-name">${$awayTeam}</p>
-      </div>
-      <div class="score">
-        <p class="text-center score" id=score>${filteredData[0].awayScore}</p>
-      </div>
-    </div>
-    <div class="at">at</div>
+    rivals.forEach((rival, i) => {
 
-    
-    <div class="homeTeam">
-      <div class="record mb-2">
-        <p class="text-center" id="record">${teamData[teamNames[homeAbbr].part]["record"]}</p>
-      </div>
-      <div class="team mb-2">
-        <div class="team-logo mx-auto">
-          <img class="matchup-logo" src="/photos/${homeTeamName}.gif">
-        </div>
-      </div>
-      <div class="teamName mb-1">
-          <p class="text-center" id="team-name">${$homeTeam}</p>
-      </div>
-      <div class="score">
-        <p class="text-center score" id=score>${filteredData[0].homeScore}</p>
-      </div>
-    </div>
+      $rival = `<div class="first mb-1">
+    &nbsp;${i + 1}. <span class="div-team-name"><img class="div-logo " src="${rival.teamLogo}">${rival.teamProperName}<span class=" div-record" id="div-record">${rival.teamRecord}</span></span></div>`;
 
+      $(".matchup-row").append($rival);
 
+    });
 
+    $.ajax({
+      url: "/api/roster/" + currentTeamData.teamAbbr,
+      method: "GET"
+    }).then(function (data) {
+      // console.log(data)
+      data.forEach(player => {
+        const $tableRow = $("<tr>");
+        const $jerseyNumber = $("<td>").text(player.jerseyNumber);
+        const $firstName = $("<td>").text(player.firstName);
+        const $lastName = $("<td>").text(player.lastName);
+        const $primaryPosition = $("<td>").text(player.primaryPosition);
+        const $height = $("<td>").text(player.height);
+        const $weight = $("<td>").text(player.weight);
+        const $age = $("<td>").text(player.age);
 
-    
+        $tableRow.append($jerseyNumber, $firstName, $lastName, $primaryPosition, $height, $weight, $age)
 
-  </div>`
- 
+        $("#roster-table > tbody").append($tableRow)
 
-  $(".matchup-div").append($matchup);
-    // console.log(moment(matchup.startTime).format("h:mm"))
- 
-    // if (moment(matchup.startTime).format("dddd") === "Thursday") {
-    //  $("#tnf").append($matchup);
-    // } else if (moment(matchup.startTime).format("dddd") === "Monday") {
-    //  $("#mnf").append($matchup);
-    // } else if (moment(matchup.startTime).format("h:mm") === "1:00") {
-    //  $("#afternoon-games").append($matchup)
-    // } else if (moment(matchup.startTime).format("h:mm") === "4:05" || moment(matchup.startTime).format("h:mm") === "4:25") {
-    //  $("#late-afternoon-games").append($matchup)
-    // } else {
-    //  $("#snf").append($matchup)
-    // }
- 
- 
- 
-    // if (moment(matchup.startTime).format("MM/DD/YYYY h:mma")) {
- 
- 
-    //   break;
-    // }
-    // console.log(moment(matchup.startTime).format("dddd"))
-    // if thursday,  $("#tnf").append($matchup)
-    // if 1:00 starts,    $("#tnf").append($matchup)
-    //if 4:05 or 4:25
-    // else
- 
-    // $("#afternoon-games").append($matchup)
-    // $("#late-afternoon-games").append($matchup)
-    // $("#snf").append($matchup)
-    // $("#mnf").append($matchup)
- 
- 
- 
- 
-  //  })
- 
-   // const start = moment(matchup.startTime).format("MM/DD/YYYY h:mma");
-   // console.log(start)
+      })
+    })
   })
- }
 
+  $.ajax({
+    url: "/api/news/all",
+    method: "GET"
+  }).then(function (data) {
 
+    const homeNewsArray = []
 
+    data.articles.forEach(article => {
+      homeNewsArray.push(
+        {
+          "title": article.title,
+          "url": article.url,
+          "urlToImage": article.urlToImage,
+        });
+    })
 
-
- function abbrToName(abbr) {
-
-  for (let team in teamData) {
-    for (let property in teamData[team]) {
-      // console.log(teamData[team][property])
-     if (teamData[team][property] === abbr) {
-      abbreviation = teamData[team].abbr;
-
-      teamNames[abbreviation] = {
-        full: titleCase(teamData[team].city + " " + teamData[team].name),
-        part: teamData[team].name
-       }
-      return (`${teamData[team].city} ${teamData[team].name}`);
-     }
+    for (let x = 0; x < $(".article-pic-left").length; x++) {
+      $(".text")[x].innerText = homeNewsArray[x].title;
+      $(".article-pic-left")[x].src = homeNewsArray[x].urlToImage;
     }
-   }
- }
+
+    $(".article-pic-left").on("error", function () {
+      $(this).attr('src', `/photos/$${team}.png`);
+    });
+  })
+
+  $.ajax({
+    url: "/api/matchups",
+    method: "GET"
+  }).then(function (data) {
+
+    data.forEach(matchup => {
+
+      const homeTeam = dataCheck("teamAbbr", matchup.homeTeam)
+      const awayTeam = dataCheck("teamAbbr", matchup.awayTeam)
+
+      if (matchup.awayScore === null || matchup.homeScore === null) {
+        matchup.awayScore = 0;
+        matchup.homeScore = 0;
+      }
+
+      if (homeTeam.teamAbbr === currentTeamData.teamAbbr || awayTeam.teamAbbr === currentTeamData.teamAbbr) {
+
+        // const niners = team === "niners" ? "49ERS" : team.toUpperCase()
+
+
+        let $teamMatchup = `        
+        <div class="matchup-row">
+        <div class="awayTeam">
+          <div class="record mb-2">
+            <p class="text-center" id="record">${awayTeam.teamRecord}</p>
+          </div>
+          <div class="team mb-2">
+            <div class="team-logo mx-auto">
+              <img class="matchup-logo" src="/photos/${awayTeam.teamNameLower}.gif">
+            </div>
+          </div>
+          <div class="teamName mb-1">
+              <p class="text-center" id="team-name">${awayTeam.teamProperName}</p>
+          </div>
+          <div class="score">
+            <p class="text-center score" id=score>${matchup.awayScore}</p>
+          </div>
+        </div>
+        <div class="at">at</div>
+        
+        <div class="homeTeam">
+          <div class="record mb-2">
+            <p class="text-center" id="record">${homeTeam.teamRecord}</p>
+          </div>
+          <div class="team mb-2">
+            <div class="team-logo mx-auto">
+              <img class="matchup-logo" src="/photos/${homeTeam.teamNameLower}.gif">
+            </div>
+          </div>
+          <div class="teamName mb-1">
+              <p class="text-center" id="team-name">${homeTeam.teamProperName}</p>
+          </div>
+          <div class="score">
+            <p class="text-center score" id=score>${matchup.homeScore}</p>
+          </div>
+        </div>
+        
+      </div>`
+
+        $(".matchup-div").append($teamMatchup);
+
+      }
+
+
+      let $matchup = `<div class='matchup mb-2'>
+  <div class='matchup-row'>
+   <div class='awayTeam'>
+    <div class='record mb-2'>
+     <p class='text-center' id='record'>${awayTeam.teamRecord}</p>
+    </div>
+    <div class='team mb-2'>
+     <div class='team-logo mx-auto'>
+      <img class='matchup-logo' src='./photos/${awayTeam.teamNameLower}.gif'>
+     </div>
+    </div>
+    <div class='teamName mb-1'>
+     <p class='text-center' id='team-name'>${awayTeam.teamProperName}</p>
+    </div>
+    <div class='score'>
+     <p class='text-center score' id=score>${matchup.awayScore}</p>
+    </div>
+   </div>
+   <div class='at'>at</div>
+   <div class='homeTeam'>
+    <div class='record mb-2'>
+     <p class='text-center' id='record'>${homeTeam.teamRecord}</p>
+    </div>
+    <div class='team mb-2'>
+     <div class='team-logo mx-auto'>
+      <img class='matchup-logo' src='./photos/${homeTeam.teamNameLower}.gif'>
+     </div>
+    </div>
+    <div class='teamName mb-1'>
+     <p class='text-center' id='team-name'>${homeTeam.teamProperName}</p>
+    </div>
+    <div class='score'>
+     <p class='text-center score' id=score>${matchup.homeScore}</p>
+    </div>
+   </div>
+  </div>
+ </div>`
+
+
+      if (moment(matchup.startTime).format("dddd") === "Thursday") {
+        $("#tnf").append($matchup);
+      } else if (moment(matchup.startTime).format("dddd") === "Monday") {
+        $("#mnf").append($matchup);
+      } else if (moment(matchup.startTime).format("h:mm") === "1:00") {
+        $("#afternoon-games").append($matchup)
+      } else if (moment(matchup.startTime).format("h:mm") === "4:05" || moment(matchup.startTime).format("h:mm") === "4:25") {
+        $("#late-afternoon-games").append($matchup)
+      } else {
+        $("#snf").append($matchup)
+      }
+    })
 
 
 
- function titleCase(str) {
-  str = str.toLowerCase().split(' ');
-  for (var i = 0; i < str.length; i++) {
-   str[i] = str[i].charAt(0).toUpperCase() + str[i].slice(1);
-  }
-  return( str.join(' ')); 
- }
+
+  })
+
+
+})();
 
 
 
 
- setRecords();
- setMatchups();
- setRoster();
+
