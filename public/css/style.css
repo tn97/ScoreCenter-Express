@@ -672,3 +672,11 @@ h4 {
   margin: 10px;
   background: none !important;
 }
+
+#login {
+  background: none;
+}
+
+#signup {
+  background: none;
+}
