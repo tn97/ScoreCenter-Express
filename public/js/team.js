@@ -1,6 +1,16 @@
 
 
+      const dataCheck = (teamKey, searchKey) => {
+        const checkedData = [];
+        teamData.forEach((team, i) => {
+          if (searchKey === team[teamKey]) {
+            console.log(teamData[i])
+            checkedData.push(teamData[i]);
+          }
+        })
 
+        return checkedData;
+      }
 
 const titleCase = (str) => {
   str = str.toLowerCase().split(' ');
@@ -729,70 +739,56 @@ const teamData = [
 })();
 
 
-  
 
-(function() {
+
+(function () {
   $.ajax({
-   url: "/api/matchups",
-   method: "GET"
+    url: "/api/matchups",
+    method: "GET"
   }).then(function (data) {
-   console.log(data);
- 
-   data.forEach(matchup => {
+    console.log(data);
 
-     
-    function dataCheck(teamKey, searchKey)  {
-      const checkedData = [];
-       
-       
-       teamData.forEach((team, i) => {
-console.log(searchKey, team[teamKey])
-    
-         if (searchKey === team[teamKey]) {
-           console.log(teamData[i])
-           checkedData.push(teamData[i]);
-          }
-        })
-        
-        return checkedData;
+    data.forEach(matchup => {
+
+
+
+
+
+
+      console.log(dataCheck("teamAbbr", "NO"));
+      // teamCity: "atlanta",
+      // teamNameLower: "falcons",
+      // teamPrimaryCSS: "#A71930",
+      // teamSecondaryCSS: "#000000",
+      // teamAbbr: "ATL",
+      // teamGametime: "",
+      // teamLogo: "",
+      // teamDivName: "",
+      // teamDivRank: "",
+      // teamIsHome: "",
+      // teamProperName: "",
+      // teamLowerFull: "",
+      // teamCurrentScore: "",
+      // teamMatchup: "",
+      // teamRecord: "",
+      // teamJumboPhoto: "",
+
+
+
+      teamData.X = matchup.awayScore
+      teamData.X = matchup.awayScore
+      teamData.X = matchup.awayScore
+      teamData.X = matchup.awayScore
+
+
+      if (matchup.awayScore === null || matchup.homeScore === null) {
+        matchup.awayScore = 0;
+        matchup.homeScore = 0;
       }
 
 
- 
-console.log(dataCheck("teamAbbr", "NO"));
-    // teamCity: "atlanta",
-    // teamNameLower: "falcons",
-    // teamPrimaryCSS: "#A71930",
-    // teamSecondaryCSS: "#000000",
-    // teamAbbr: "ATL",
-    // teamGametime: "",
-    // teamLogo: "",
-    // teamDivName: "",
-    // teamDivRank: "",
-    // teamIsHome: "",
-    // teamProperName: "",
-    // teamLowerFull: "",
-    // teamCurrentScore: "",
-    // teamMatchup: "",
-    // teamRecord: "",
-    // teamJumboPhoto: "",
 
-
-
-    teamData.X = matchup.awayScore
-    teamData.X = matchup.awayScore
-    teamData.X = matchup.awayScore
-    teamData.X = matchup.awayScore
-
- 
-    if (matchup.awayScore === null || matchup.homeScore === null) {
-     matchup.awayScore = 0;
-     matchup.homeScore = 0;
-    }
- 
-
- 
-    let $matchup = `<div class='matchup mb-2'>
+      let $matchup = `<div class='matchup mb-2'>
   <div class='matchup-row'>
    <div class='awayTeam'>
     <div class='record mb-2'>
@@ -829,23 +825,22 @@ console.log(dataCheck("teamAbbr", "NO"));
    </div>
   </div>
  </div>`
- 
-    // console.log(moment(matchup.startTime).format("h:mm"))
- 
-    if (moment(matchup.startTime).format("dddd") === "Thursday") {
-     $("#tnf").append($matchup);
-    } else if (moment(matchup.startTime).format("dddd") === "Monday") {
-     $("#mnf").append($matchup);
-    } else if (moment(matchup.startTime).format("h:mm") === "1:00") {
-     $("#afternoon-games").append($matchup)
-    } else if (moment(matchup.startTime).format("h:mm") === "4:05" || moment(matchup.startTime).format("h:mm") === "4:25") {
-     $("#late-afternoon-games").append($matchup)
-    } else {
-     $("#snf").append($matchup)
-    }
+
+      // console.log(moment(matchup.startTime).format("h:mm"))
+
+      if (moment(matchup.startTime).format("dddd") === "Thursday") {
+        $("#tnf").append($matchup);
+      } else if (moment(matchup.startTime).format("dddd") === "Monday") {
+        $("#mnf").append($matchup);
+      } else if (moment(matchup.startTime).format("h:mm") === "1:00") {
+        $("#afternoon-games").append($matchup)
+      } else if (moment(matchup.startTime).format("h:mm") === "4:05" || moment(matchup.startTime).format("h:mm") === "4:25") {
+        $("#late-afternoon-games").append($matchup)
+      } else {
+        $("#snf").append($matchup)
+      }
+    })
   })
- })
 })();
 
- 
- 
+
