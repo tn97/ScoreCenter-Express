@@ -260,6 +260,18 @@ const teamData = {
   }
 }
 
+const teamNames = {};
+
+for (let team in teamData) {
+  for (let property in teamData[team]) {
+   abbreviation = teamData[team].abbr;
+   teamNames[abbreviation] = {
+    full: titleCase(teamData[team].city + " " + teamData[team].name),
+    part: teamData[team].name
+   }
+ }
+}
+
 // $(document).ready(function () {
 //   $('#roster-table').DataTable();
 // });
@@ -363,12 +375,7 @@ setTeamNews();
 
 
 const setRoster = () => {
-
   const teamAbbr = teamData[team].abbr;
-
-
-
-
   $.ajax({
         url: "/api/roster/" + teamAbbr,
         method: "GET"
@@ -397,6 +404,190 @@ const setRoster = () => {
   })
 }
 
-setRoster();
+
+const setRecords = () => {
+  $.ajax({
+   method: "GET",
+   url: "/api/divisions"
+  }).then((data) => {
+   // console.log(data)
+ 
+   data.forEach(team => {
+    // console.log(data)
+    let teamRef = team.name.toLowerCase();
+    teamData[teamRef]["record"] = `${team.wins} - ${team.losses} - ${team.ties}`;
+   })
+ 
+  })
+ }
+
+const setMatchups = () => {
 
 
+
+
+
+  $.ajax({
+   url: "/api/matchups",
+   method: "GET"
+  }).then(function (data) {
+
+   // console.log(data);
+   const teamAbbr = teamData[team].abbr;
+
+   const filteredData = data.filter(matchup => {
+     
+     return matchup.awayTeam === teamAbbr || matchup.homeTeam === teamAbbr
+    })
+    console.log(filteredData)
+
+    const homeAbbr = filteredData[0].homeTeam;
+    const awayAbbr = filteredData[0].awayTeam;
+
+    
+    if (filteredData[0].awayScore === null || filteredData[0].homeScore === null) {
+      filteredData[0].awayScore = 0;
+      filteredData[0].homeScore = 0;
+    }
+    
+    console.log(filteredData[0].homeScore)
+
+   const homeTeamName = abbrToName(filteredData[0].homeTeam).split(" ")[1].toLowerCase();
+   const awayTeamName = abbrToName(filteredData[0].awayTeam).split(" ")[1].toLowerCase();
+
+
+  //  console.log(homeTeamName)
+ 
+   const $homeTeam = titleCase(abbrToName(filteredData[0].homeTeam))
+    const $awayTeam = titleCase(abbrToName(filteredData[0].awayTeam))
+
+console.log(teamData[teamNames[awayAbbr].part]["record"])
+
+
+    let $matchup = `        
+    <div class="matchup-row">
+    <div class="awayTeam">
+      <div class="record mb-2">
+        <p class="text-center" id="record">${teamData[teamNames[awayAbbr].part]["record"]}</p>
+      </div>
+      <div class="team mb-2">
+        <div class="team-logo mx-auto">
+          <img class="matchup-logo" src="/photos/${awayTeamName}.gif">
+        </div>
+      </div>
+      <div class="teamName mb-1">
+          <p class="text-center" id="team-name">${$awayTeam}</p>
+      </div>
+      <div class="score">
+        <p class="text-center score" id=score>${filteredData[0].awayScore}</p>
+      </div>
+    </div>
+    <div class="at">at</div>
+
+    
+    <div class="homeTeam">
+      <div class="record mb-2">
+        <p class="text-center" id="record">${teamData[teamNames[homeAbbr].part]["record"]}</p>
+      </div>
+      <div class="team mb-2">
+        <div class="team-logo mx-auto">
+          <img class="matchup-logo" src="/photos/${homeTeamName}.gif">
+        </div>
+      </div>
+      <div class="teamName mb-1">
+          <p class="text-center" id="team-name">${$homeTeam}</p>
+      </div>
+      <div class="score">
+        <p class="text-center score" id=score>${filteredData[0].homeScore}</p>
+      </div>
+    </div>
+
+
+
+
+    
+
+  </div>`
+ 
+
+  $(".matchup-div").append($matchup);
+    // console.log(moment(matchup.startTime).format("h:mm"))
+ 
+    // if (moment(matchup.startTime).format("dddd") === "Thursday") {
+    //  $("#tnf").append($matchup);
+    // } else if (moment(matchup.startTime).format("dddd") === "Monday") {
+    //  $("#mnf").append($matchup);
+    // } else if (moment(matchup.startTime).format("h:mm") === "1:00") {
+    //  $("#afternoon-games").append($matchup)
+    // } else if (moment(matchup.startTime).format("h:mm") === "4:05" || moment(matchup.startTime).format("h:mm") === "4:25") {
+    //  $("#late-afternoon-games").append($matchup)
+    // } else {
+    //  $("#snf").append($matchup)
+    // }
+ 
+ 
+ 
+    // if (moment(matchup.startTime).format("MM/DD/YYYY h:mma")) {
+ 
+ 
+    //   break;
+    // }
+    // console.log(moment(matchup.startTime).format("dddd"))
+    // if thursday,  $("#tnf").append($matchup)
+    // if 1:00 starts,    $("#tnf").append($matchup)
+    //if 4:05 or 4:25
+    // else
+ 
+    // $("#afternoon-games").append($matchup)
+    // $("#late-afternoon-games").append($matchup)
+    // $("#snf").append($matchup)
+    // $("#mnf").append($matchup)
+ 
+ 
+ 
+ 
+  //  })
+ 
+   // const start = moment(matchup.startTime).format("MM/DD/YYYY h:mma");
+   // console.log(start)
+  })
+ }
+
+
+
+
+
+ function abbrToName(abbr) {
+
+  for (let team in teamData) {
+    for (let property in teamData[team]) {
+      // console.log(teamData[team][property])
+     if (teamData[team][property] === abbr) {
+      abbreviation = teamData[team].abbr;
+
+      teamNames[abbreviation] = {
+        full: titleCase(teamData[team].city + " " + teamData[team].name),
+        part: teamData[team].name
+       }
+      return (`${teamData[team].city} ${teamData[team].name}`);
+     }
+    }
+   }
+ }
+
+
+
+ function titleCase(str) {
+  str = str.toLowerCase().split(' ');
+  for (var i = 0; i < str.length; i++) {
+   str[i] = str[i].charAt(0).toUpperCase() + str[i].slice(1);
+  }
+  return( str.join(' ')); 
+ }
+
+
+
+
+ setRecords();
+ setMatchups();
+ setRoster();
