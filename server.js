@@ -16,12 +16,13 @@ var data = msf.getData('nfl', '2018-2019-regular', 'players', 'json', {sort: "pl
 var data = msf.getData('nfl', '2018-2019-regular', 'weekly_games', 'json', { week: "13", sort: "game.starttime", rosterstatus: "assigned-to-roster", force: "true" });
 var data = msf.getData('nfl', '2018-2019-regular', 'seasonal_standings', 'json', { force: "true" });
 
+const PORT = process.env.PORT || 3000;
 
 const express = require("express");
 var path = require("path");
 
 var app = express();
-var PORT = process.env.PORT || 3000;
+
 const db = require("./models");
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -279,9 +280,14 @@ app.use(require("./routes/htmlRoutes.js"));
       io.sockets.emit('get users', users);
     }
   });
-  server.listen(process.env.PORT || 3000);
-  console.log("server running");
-  
+
+  db.sequelize.sync({force: false}).then(() => {
+    app.listen(PORT, () => {
+      console.log("==> 🌎  Listening on port %s. Visit http://localhost:%s/ in your browser.", PORT);
+    });
+  });
+
+ 
 
   // app.listen(PORT, function () {
   //   console.log("App listening on PORT: " + PORT);
