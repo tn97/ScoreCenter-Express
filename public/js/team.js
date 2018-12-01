@@ -728,6 +728,20 @@ const teamData = [
   })
 })();
 
+function dataCheck(teamKey, searchKey)  {
+  const checkedData = [];
+   
+   
+   teamData.forEach((team, i) => {
+     if (searchKey === teamData[i][teamKey]) {
+       checkedData.push(teamData[i]);
+      }
+    })
+    
+    return checkedData;
+  }
+  
+
 (function() {
   $.ajax({
    url: "/api/matchups",
@@ -737,16 +751,11 @@ const teamData = [
  
    data.forEach(matchup => {
 
-    function dataCheck(teamKey, searchKey)  {
-      teamData.forEach((team, i) => {
-        if (searchKey === teamData[i][teamKey]) {
-          return teamData[i];
-        }
-      })
-    }
+     
 
-      var eddie = dataCheck("teamAbbr", matchup.awayTeam);
-      console.log(eddie)
+
+      console.log(dataCheck("abbr", "PHI"))
+
  
 
     // teamCity: "atlanta",
