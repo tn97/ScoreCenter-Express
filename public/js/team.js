@@ -728,18 +728,7 @@ const teamData = [
   })
 })();
 
-function dataCheck(teamKey, searchKey)  {
-  const checkedData = [];
-   
-   
-   teamData.forEach((team, i) => {
-     if (searchKey === teamData[i][teamKey]) {
-       checkedData.push(teamData[i]);
-      }
-    })
-    
-    return checkedData;
-  }
+
   
 
 (function() {
@@ -752,12 +741,25 @@ function dataCheck(teamKey, searchKey)  {
    data.forEach(matchup => {
 
      
+    function dataCheck(teamKey, searchKey)  {
+      const checkedData = [];
+       
+       
+       teamData.forEach((team, i) => {
+console.log(searchKey, team[teamKey])
+    
+         if (searchKey === team[teamKey]) {
+           console.log(teamData[i])
+           checkedData.push(teamData[i]);
+          }
+        })
+        
+        return checkedData;
+      }
 
-
-      console.log(dataCheck("abbr", "PHI"))
 
  
-
+console.log(dataCheck("teamAbbr", "NO"));
     // teamCity: "atlanta",
     // teamNameLower: "falcons",
     // teamPrimaryCSS: "#A71930",
