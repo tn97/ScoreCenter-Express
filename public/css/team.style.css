@@ -264,6 +264,26 @@ h4 {
   position: relative;
 }
 
+.awayTeam {
+  position: absolute;
+  /* border: 1px solid darkgreen; */
+  height: 216px;
+  width: 300px;
+  left: 0px;
+  padding: 8px 0;
+
+}
+
+.homeTeam {
+  position: absolute;
+  /* border: 1px solid blue; */
+  height: 216px;
+  width: 300px;
+  left: 46.2%;
+  padding: 8px 0;
+
+}
+
 
 .leftTeam {
   position: absolute;
@@ -308,7 +328,7 @@ h5 a {
   position: absolute;
   z-index: 5;
   left: 48.2%;
-  top: 30%;
+  margin-top: 60px;
 }
   
   .black-hr {

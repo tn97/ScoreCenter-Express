@@ -1,16 +1,15 @@
 
 
-      const dataCheck = (teamKey, searchKey) => {
-        const checkedData = [];
-        teamData.forEach((team, i) => {
-          if (searchKey === team[teamKey]) {
-            console.log(teamData[i])
-            checkedData.push(teamData[i]);
-          }
-        })
+const dataCheck = (teamKey, searchKey) => {
+  const checkedData = [];
+  teamData.forEach((team, i) => {
+    if (searchKey === team[teamKey]) {
+      checkedData.push(teamData[i]);
+    }
+  })
 
-        return checkedData;
-      }
+  return checkedData[0];
+}
 
 const titleCase = (str) => {
   str = str.toLowerCase().split(' ');
@@ -599,8 +598,6 @@ const teamData = [
   }
 ];
 
-
-
 //SET INDIVIDUAL NFL TEAM DATA DETAILS
 (function () {
   teamData.forEach(squad => {
@@ -618,189 +615,238 @@ const teamData = [
   const team = url[url.length - 1]
   const root = document.querySelector(':root');
 
-  teamData.forEach((squad, i) => {
-    if (squad.teamNameLower === team) {
-      currentTeamData = squad;
-    }
-  })
-
-  if (team !== "home") {
-
-    //assign and set primary and secondary colors from teamData object based on team
-    $("#team-headline").text(team)
-    root.style.setProperty('--primary-color', currentTeamData.teamPrimaryCSS)
-    root.style.setProperty('--secondary-color', currentTeamData.teamSecondaryCSS)
-
-    //changing image based on team
-    $(".jumbo-image").attr("src", currentTeamData.teamJumboPhoto);
-    $("#teamCity").text(currentTeamData.teamCity.toUpperCase())
-    $("#teamName").text(team.toUpperCase())
-
-    $.ajax({
-      url: "/api/news/" + currentTeamData.teamLowerFull,
-      method: "GET"
-    }).then(function (data) {
-      console.log(data)
-      const teamNewsArray = [];
-
-      data.articles.forEach((article) => {
-
-        teamNewsArray.push(
-          {
-            "title": article.title,
-            "url": article.url,
-            "urlToImage": article.urlToImage,
-            "source": article.source.name,
-            "description": article.description
-          });
-      })
-
-      for (let x = 0; x < $(".article-pic-left").length; x++) {
-        $(".text")[x].innerText = teamNewsArray[x].title;
-        $(".article-pic-left")[x].src = teamNewsArray[x].urlToImage;
-      }
-
-      $(".article-pic-left").on("error", function () {
-        $(this).attr('src', `/photos/$${team}.png`);
-      });
-    })
+  //SETUP CURRENTTEAMDATA OBJECT
+teamData.forEach((squad, i) => {
+  if (squad.teamNameLower === team) {
+    currentTeamData = squad;
   }
+});
+
+if (team !== "home") {
+
+  //assign and set primary and secondary colors from teamData object based on team
+  $("#team-headline").text(team)
+
+  root.style.setProperty('--primary-color', currentTeamData.teamPrimaryCSS)
+  root.style.setProperty('--secondary-color', currentTeamData.teamSecondaryCSS)
+
+  //changing image based on team
+  $(".jumbo-image").attr("src", currentTeamData.teamJumboPhoto);
+  $("#teamCity").text(currentTeamData.teamCity.toUpperCase())
+  const niners = team === "niners" ? "49ERS" : team.toUpperCase()
+  $("#teamName").text(niners)
 
   $.ajax({
-    url: "/api/roster/" + currentTeamData.teamAbbr,
+    url: "/api/news/" + currentTeamData.teamLowerFull,
     method: "GET"
   }).then(function (data) {
-    // console.log(data)
-    data.forEach(player => {
-      const $tableRow = $("<tr>");
-      const $jerseyNumber = $("<td>").text(player.jerseyNumber);
-      const $firstName = $("<td>").text(player.firstName);
-      const $lastName = $("<td>").text(player.lastName);
-      const $primaryPosition = $("<td>").text(player.primaryPosition);
-      const $height = $("<td>").text(player.height);
-      const $weight = $("<td>").text(player.weight);
-      const $age = $("<td>").text(player.age);
 
-      $tableRow.append($jerseyNumber, $firstName, $lastName, $primaryPosition, $height, $weight, $age)
+    const teamNewsArray = [];
 
-      $("#roster-table > tbody").append($tableRow)
+    data.articles.forEach((article) => {
 
-    })
-  })
-
-
-
-})();
-
-//SET DIVISIONS AND RECORD
-(function () {
-  $.ajax({
-    method: "GET",
-    url: "/api/divisions"
-  }).then((data) => {
-    data.forEach((squad, i) => {
-      if (teamData.teamNameLower, squad.name.toLowerCase()) {
-        teamData[i].teamRecord = `${squad.wins} - ${squad.losses} - ${squad.ties}`;
-        teamData[i].teamDivRank = squad.divisionName;
-        teamData[i].teamDivName = squad.divisionRank;
-      }
-    })
-  })
-})();
-
-//SET HOME NEWS
-(function () {
-  $.ajax({
-    url: "/api/news/all",
-    method: "GET"
-  }).then(function (data) {
-    console.log(data)
-
-    const homeNewsArray = []
-
-    data.articles.forEach(article => {
-      homeNewsArray.push(
+      teamNewsArray.push(
         {
           "title": article.title,
           "url": article.url,
           "urlToImage": article.urlToImage,
+          "source": article.source.name,
+          "description": article.description
         });
     })
 
     for (let x = 0; x < $(".article-pic-left").length; x++) {
-      $(".text")[x].innerText = homeNewsArray[x].title;
-      $(".article-pic-left")[x].src = homeNewsArray[x].urlToImage;
+      $(".text")[x].innerText = teamNewsArray[x].title;
+      $(".article-pic-left")[x].src = teamNewsArray[x].urlToImage;
     }
 
     $(".article-pic-left").on("error", function () {
       $(this).attr('src', `/photos/$${team}.png`);
     });
   })
+};
+
 })();
 
 
 
 
+
+
+//SET DIVISIONS AND RECORD
 (function () {
   $.ajax({
-    url: "/api/matchups",
-    method: "GET"
+    method: "GET",
+    url: "/api/divisions"
   }).then(function (data) {
-    console.log(data);
 
-    data.forEach(matchup => {
+    
+    data.forEach((squad, i) => {
+      
+      
+      if (currentTeamData.teamNameLower === squad.name.toLowerCase()) {
+        currentTeamData.teamDivName = squad.divisionName;
+        currentTeamData.teamDivRank = squad.divisionRank;
+      }
+      
+    })
+    const rivals = [];
 
+    data.forEach((squad, i) => {
+      teamData[i].teamRecord = `${squad.wins} - ${squad.losses} - ${squad.ties}`;
+      teamData[i].teamDivRank = squad.divisionRank;
+      teamData[i].teamDivName = squad.divisionName;
 
-
-
-
-
-      console.log(dataCheck("teamAbbr", "NO"));
-      // teamCity: "atlanta",
-      // teamNameLower: "falcons",
-      // teamPrimaryCSS: "#A71930",
-      // teamSecondaryCSS: "#000000",
-      // teamAbbr: "ATL",
-      // teamGametime: "",
-      // teamLogo: "",
-      // teamDivName: "",
-      // teamDivRank: "",
-      // teamIsHome: "",
-      // teamProperName: "",
-      // teamLowerFull: "",
-      // teamCurrentScore: "",
-      // teamMatchup: "",
-      // teamRecord: "",
-      // teamJumboPhoto: "",
+      if (currentTeamData.teamDivName === squad.divisionName) {
+        rivals.push(teamData[i])
+  
+      }
+    })
 
 
-
-      teamData.X = matchup.awayScore
-      teamData.X = matchup.awayScore
-      teamData.X = matchup.awayScore
-      teamData.X = matchup.awayScore
+    const sortedRivals = rivals.sort((b, a) => { return b.teamDivRank - a.teamDivRank });
 
 
-      if (matchup.awayScore === null || matchup.homeScore === null) {
-        matchup.awayScore = 0;
-        matchup.homeScore = 0;
+    rivals.forEach((rival, i) => {
+
+      $rival = `<div class="first mb-1">
+    &nbsp;${i + 1}. <span class="div-team-name"><img class="div-logo " src="${rival.teamLogo}">${rival.teamProperName}<span class=" div-record" id="div-record">${rival.teamRecord}</span></span></div>`;
+
+      $(".matchup-row").append($rival);
+
+    });
+
+    $.ajax({
+      url: "/api/roster/" + currentTeamData.teamAbbr,
+      method: "GET"
+    }).then(function (data) {
+      // console.log(data)
+      data.forEach(player => {
+        const $tableRow = $("<tr>");
+        const $jerseyNumber = $("<td>").text(player.jerseyNumber);
+        const $firstName = $("<td>").text(player.firstName);
+        const $lastName = $("<td>").text(player.lastName);
+        const $primaryPosition = $("<td>").text(player.primaryPosition);
+        const $height = $("<td>").text(player.height);
+        const $weight = $("<td>").text(player.weight);
+        const $age = $("<td>").text(player.age);
+
+        $tableRow.append($jerseyNumber, $firstName, $lastName, $primaryPosition, $height, $weight, $age)
+
+        $("#roster-table > tbody").append($tableRow)
+
+      })
+    })
+  })
+})();
+
+  //SET HOME NEWS
+  (function () {
+    $.ajax({
+      url: "/api/news/all",
+      method: "GET"
+    }).then(function (data) {
+
+      const homeNewsArray = []
+
+      data.articles.forEach(article => {
+        homeNewsArray.push(
+          {
+            "title": article.title,
+            "url": article.url,
+            "urlToImage": article.urlToImage,
+          });
+      })
+
+      for (let x = 0; x < $(".article-pic-left").length; x++) {
+        $(".text")[x].innerText = homeNewsArray[x].title;
+        $(".article-pic-left")[x].src = homeNewsArray[x].urlToImage;
       }
 
+      $(".article-pic-left").on("error", function () {
+        $(this).attr('src', `/photos/$${team}.png`);
+      });
+    })
+  })();
+
+  (function () {
+    $.ajax({
+      url: "/api/matchups",
+      method: "GET"
+    }).then(function (data) {
+
+      data.forEach(matchup => {
+
+        const homeTeam = dataCheck("teamAbbr", matchup.homeTeam)
+        const awayTeam = dataCheck("teamAbbr", matchup.awayTeam)
+
+        if (matchup.awayScore === null || matchup.homeScore === null) {
+          matchup.awayScore = 0;
+          matchup.homeScore = 0;
+        }
+
+        if (homeTeam.teamAbbr === currentTeamData.teamAbbr || awayTeam.teamAbbr === currentTeamData.teamAbbr) {
+
+          // const niners = team === "niners" ? "49ERS" : team.toUpperCase()
 
 
-      let $matchup = `<div class='matchup mb-2'>
+          let $teamMatchup = `        
+        <div class="matchup-row">
+        <div class="awayTeam">
+          <div class="record mb-2">
+            <p class="text-center" id="record">${awayTeam.teamRecord}</p>
+          </div>
+          <div class="team mb-2">
+            <div class="team-logo mx-auto">
+              <img class="matchup-logo" src="/photos/${awayTeam.teamNameLower}.gif">
+            </div>
+          </div>
+          <div class="teamName mb-1">
+              <p class="text-center" id="team-name">${awayTeam.teamProperName}</p>
+          </div>
+          <div class="score">
+            <p class="text-center score" id=score>${matchup.awayScore}</p>
+          </div>
+        </div>
+        <div class="at">at</div>
+        
+        <div class="homeTeam">
+          <div class="record mb-2">
+            <p class="text-center" id="record">${homeTeam.teamRecord}</p>
+          </div>
+          <div class="team mb-2">
+            <div class="team-logo mx-auto">
+              <img class="matchup-logo" src="/photos/${homeTeam.teamNameLower}.gif">
+            </div>
+          </div>
+          <div class="teamName mb-1">
+              <p class="text-center" id="team-name">${homeTeam.teamProperName}</p>
+          </div>
+          <div class="score">
+            <p class="text-center score" id=score>${matchup.homeScore}</p>
+          </div>
+        </div>
+        
+      </div>`
+
+          $(".matchup-div").append($teamMatchup);
+
+        }
+
+
+        let $matchup = `<div class='matchup mb-2'>
   <div class='matchup-row'>
    <div class='awayTeam'>
     <div class='record mb-2'>
-     <p class='text-center' id='record'>${teamData[teamNames[matchup.awayTeam].part]["record"]}</p>
+     <p class='text-center' id='record'>${awayTeam.teamRecord}</p>
     </div>
     <div class='team mb-2'>
      <div class='team-logo mx-auto'>
-      <img class='matchup-logo' src='./photos/${teamNames[matchup.awayTeam].part}.gif'>
+      <img class='matchup-logo' src='./photos/${awayTeam.teamNameLower}.gif'>
      </div>
     </div>
     <div class='teamName mb-1'>
-     <p class='text-center' id='team-name'>${teamNames[matchup.awayTeam].full}</p>
+     <p class='text-center' id='team-name'>${awayTeam.teamProperName}</p>
     </div>
     <div class='score'>
      <p class='text-center score' id=score>${matchup.awayScore}</p>
@@ -809,15 +855,15 @@ const teamData = [
    <div class='at'>at</div>
    <div class='homeTeam'>
     <div class='record mb-2'>
-     <p class='text-center' id='record'>${teamData[teamNames[matchup.homeTeam].part]["record"]}</p>
+     <p class='text-center' id='record'>${homeTeam.teamRecord}</p>
     </div>
     <div class='team mb-2'>
      <div class='team-logo mx-auto'>
-      <img class='matchup-logo' src='./photos/${teamNames[matchup.homeTeam].part}.gif'>
+      <img class='matchup-logo' src='./photos/${homeTeam.teamNameLower}.gif'>
      </div>
     </div>
     <div class='teamName mb-1'>
-     <p class='text-center' id='team-name'>${teamNames[matchup.homeTeam].full}</p>
+     <p class='text-center' id='team-name'>${homeTeam.teamProperName}</p>
     </div>
     <div class='score'>
      <p class='text-center score' id=score>${matchup.homeScore}</p>
@@ -826,21 +872,18 @@ const teamData = [
   </div>
  </div>`
 
-      // console.log(moment(matchup.startTime).format("h:mm"))
 
-      if (moment(matchup.startTime).format("dddd") === "Thursday") {
-        $("#tnf").append($matchup);
-      } else if (moment(matchup.startTime).format("dddd") === "Monday") {
-        $("#mnf").append($matchup);
-      } else if (moment(matchup.startTime).format("h:mm") === "1:00") {
-        $("#afternoon-games").append($matchup)
-      } else if (moment(matchup.startTime).format("h:mm") === "4:05" || moment(matchup.startTime).format("h:mm") === "4:25") {
-        $("#late-afternoon-games").append($matchup)
-      } else {
-        $("#snf").append($matchup)
-      }
+        if (moment(matchup.startTime).format("dddd") === "Thursday") {
+          $("#tnf").append($matchup);
+        } else if (moment(matchup.startTime).format("dddd") === "Monday") {
+          $("#mnf").append($matchup);
+        } else if (moment(matchup.startTime).format("h:mm") === "1:00") {
+          $("#afternoon-games").append($matchup)
+        } else if (moment(matchup.startTime).format("h:mm") === "4:05" || moment(matchup.startTime).format("h:mm") === "4:25") {
+          $("#late-afternoon-games").append($matchup)
+        } else {
+          $("#snf").append($matchup)
+        }
+      })
     })
-  })
-})();
-
-
+  })();
