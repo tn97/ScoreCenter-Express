@@ -1,5 +1,6 @@
 
 
+
 const dataCheck = (teamKey, searchKey) => {
   const checkedData = [];
   teamData.forEach((team, i) => {
@@ -666,9 +667,11 @@ const teamData = [
       $(".article-pic-left").on("error", function () {
         $(this).attr('src', `/photos/$${team}.png`);
       });
+
     })
   };
-
+  getDivisions();
+ function getDivisions() {
   $.ajax({
     method: "GET",
     url: "/api/divisions"
@@ -711,6 +714,11 @@ const teamData = [
 
     });
 
+    getRoster();
+  })
+ }
+
+  function getRoster() {
     $.ajax({
       url: "/api/roster/" + currentTeamData.teamAbbr,
       method: "GET"
@@ -731,159 +739,164 @@ const teamData = [
         $("#roster-table > tbody").append($tableRow)
 
       })
+      getNews();
     })
-  })
+  }
 
-  $.ajax({
-    url: "/api/news/all",
-    method: "GET"
-  }).then(function (data) {
-
-    const homeNewsArray = []
-
-    data.articles.forEach(article => {
-      homeNewsArray.push(
-        {
-          "title": article.title,
-          "url": article.url,
-          "urlToImage": article.urlToImage,
-        });
-    })
-
-    for (let x = 0; x < $(".article-pic-left").length; x++) {
-      $(".text")[x].innerText = homeNewsArray[x].title;
-      $(".article-pic-left")[x].src = homeNewsArray[x].urlToImage;
-    }
-
-    $(".article-pic-left").on("error", function () {
-      $(this).attr('src', `/photos/$${team}.png`);
-    });
-  })
-
-  $.ajax({
-    url: "/api/matchups",
-    method: "GET"
-  }).then(function (data) {
-
-    data.forEach(matchup => {
-
-      const homeTeam = dataCheck("teamAbbr", matchup.homeTeam)
-      const awayTeam = dataCheck("teamAbbr", matchup.awayTeam)
-
-      if (matchup.awayScore === null || matchup.homeScore === null) {
-        matchup.awayScore = 0;
-        matchup.homeScore = 0;
+  function getNews() {
+    $.ajax({
+      url: "/api/news/all",
+      method: "GET"
+    }).then(function (data) {
+  
+      const homeNewsArray = []
+  
+      data.articles.forEach(article => {
+        homeNewsArray.push(
+          {
+            "title": article.title,
+            "url": article.url,
+            "urlToImage": article.urlToImage,
+          });
+      })
+  
+      for (let x = 0; x < $(".article-pic-left").length; x++) {
+        $(".text")[x].innerText = homeNewsArray[x].title;
+        $(".article-pic-left")[x].src = homeNewsArray[x].urlToImage;
       }
+  
+      $(".article-pic-left").on("error", function () {
+        $(this).attr('src', `/photos/$${team}.png`);
+      });
+      getMatchups();
+    })
+  }
 
-      if (homeTeam.teamAbbr === currentTeamData.teamAbbr || awayTeam.teamAbbr === currentTeamData.teamAbbr) {
-
-        // const niners = team === "niners" ? "49ERS" : team.toUpperCase()
-
-
-        let $teamMatchup = `        
-        <div class="matchup-row">
-        <div class="awayTeam">
-          <div class="record mb-2">
-            <p class="text-center" id="record">${awayTeam.teamRecord}</p>
-          </div>
-          <div class="team mb-2">
-            <div class="team-logo mx-auto">
-              <img class="matchup-logo" src="/photos/${awayTeam.teamNameLower}.gif">
+  function getMatchups() {
+    $.ajax({
+      url: "/api/matchups",
+      method: "GET"
+    }).then(function (data) {
+  
+      data.forEach(matchup => {
+  
+        const homeTeam = dataCheck("teamAbbr", matchup.homeTeam)
+        const awayTeam = dataCheck("teamAbbr", matchup.awayTeam)
+  
+        if (matchup.awayScore === null || matchup.homeScore === null) {
+          matchup.awayScore = 0;
+          matchup.homeScore = 0;
+        }
+  
+        if (homeTeam.teamAbbr === currentTeamData.teamAbbr || awayTeam.teamAbbr === currentTeamData.teamAbbr) {
+  
+          // const niners = team === "niners" ? "49ERS" : team.toUpperCase()
+  
+  
+          let $teamMatchup = `        
+          <div class="matchup-row">
+          <div class="awayTeam">
+            <div class="record mb-2">
+              <p class="text-center" id="record">${awayTeam.teamRecord}</p>
+            </div>
+            <div class="team mb-2">
+              <div class="team-logo mx-auto">
+                <img class="matchup-logo" src="/photos/${awayTeam.teamNameLower}.gif">
+              </div>
+            </div>
+            <div class="teamName mb-1">
+                <p class="text-center" id="team-name">${awayTeam.teamProperName}</p>
+            </div>
+            <div class="score">
+              <p class="text-center score" id=score>${matchup.awayScore}</p>
             </div>
           </div>
-          <div class="teamName mb-1">
-              <p class="text-center" id="team-name">${awayTeam.teamProperName}</p>
-          </div>
-          <div class="score">
-            <p class="text-center score" id=score>${matchup.awayScore}</p>
-          </div>
-        </div>
-        <div class="at">at</div>
-        
-        <div class="homeTeam">
-          <div class="record mb-2">
-            <p class="text-center" id="record">${homeTeam.teamRecord}</p>
-          </div>
-          <div class="team mb-2">
-            <div class="team-logo mx-auto">
-              <img class="matchup-logo" src="/photos/${homeTeam.teamNameLower}.gif">
+          <div class="at">at</div>
+          
+          <div class="homeTeam">
+            <div class="record mb-2">
+              <p class="text-center" id="record">${homeTeam.teamRecord}</p>
+            </div>
+            <div class="team mb-2">
+              <div class="team-logo mx-auto">
+                <img class="matchup-logo" src="/photos/${homeTeam.teamNameLower}.gif">
+              </div>
+            </div>
+            <div class="teamName mb-1">
+                <p class="text-center" id="team-name">${homeTeam.teamProperName}</p>
+            </div>
+            <div class="score">
+              <p class="text-center score" id=score>${matchup.homeScore}</p>
             </div>
           </div>
-          <div class="teamName mb-1">
-              <p class="text-center" id="team-name">${homeTeam.teamProperName}</p>
-          </div>
-          <div class="score">
-            <p class="text-center score" id=score>${matchup.homeScore}</p>
-          </div>
-        </div>
-        
-      </div>`
-
-        $(".matchup-div").append($teamMatchup);
-
-      }
-
-
-      let $matchup = `<div class='matchup mb-2'>
-  <div class='matchup-row'>
-   <div class='awayTeam'>
-    <div class='record mb-2'>
-     <p class='text-center' id='record'>${awayTeam.teamRecord}</p>
-    </div>
-    <div class='team mb-2'>
-     <div class='team-logo mx-auto'>
-      <img class='matchup-logo' src='./photos/${awayTeam.teamNameLower}.gif'>
+          
+        </div>`
+  
+          $(".matchup-div").append($teamMatchup);
+  
+        }
+  
+  
+        let $matchup = `<div class='matchup mb-2'>
+    <div class='matchup-row'>
+     <div class='awayTeam'>
+      <div class='record mb-2'>
+       <p class='text-center' id='record'>${awayTeam.teamRecord}</p>
+      </div>
+      <div class='team mb-2'>
+       <div class='team-logo mx-auto'>
+        <img class='matchup-logo' src='./photos/${awayTeam.teamNameLower}.gif'>
+       </div>
+      </div>
+      <div class='teamName mb-1'>
+       <p class='text-center' id='team-name'>${awayTeam.teamProperName}</p>
+      </div>
+      <div class='score'>
+       <p class='text-center score' id=score>${matchup.awayScore}</p>
+      </div>
+     </div>
+     <div class='at'>at</div>
+     <div class='homeTeam'>
+      <div class='record mb-2'>
+       <p class='text-center' id='record'>${homeTeam.teamRecord}</p>
+      </div>
+      <div class='team mb-2'>
+       <div class='team-logo mx-auto'>
+        <img class='matchup-logo' src='./photos/${homeTeam.teamNameLower}.gif'>
+       </div>
+      </div>
+      <div class='teamName mb-1'>
+       <p class='text-center' id='team-name'>${homeTeam.teamProperName}</p>
+      </div>
+      <div class='score'>
+       <p class='text-center score' id=score>${matchup.homeScore}</p>
+      </div>
      </div>
     </div>
-    <div class='teamName mb-1'>
-     <p class='text-center' id='team-name'>${awayTeam.teamProperName}</p>
-    </div>
-    <div class='score'>
-     <p class='text-center score' id=score>${matchup.awayScore}</p>
-    </div>
-   </div>
-   <div class='at'>at</div>
-   <div class='homeTeam'>
-    <div class='record mb-2'>
-     <p class='text-center' id='record'>${homeTeam.teamRecord}</p>
-    </div>
-    <div class='team mb-2'>
-     <div class='team-logo mx-auto'>
-      <img class='matchup-logo' src='./photos/${homeTeam.teamNameLower}.gif'>
-     </div>
-    </div>
-    <div class='teamName mb-1'>
-     <p class='text-center' id='team-name'>${homeTeam.teamProperName}</p>
-    </div>
-    <div class='score'>
-     <p class='text-center score' id=score>${matchup.homeScore}</p>
-    </div>
-   </div>
-  </div>
- </div>`
-
-
-      if (moment(matchup.startTime).format("dddd") === "Thursday") {
-        $("#tnf").append($matchup);
-      } else if (moment(matchup.startTime).format("dddd") === "Monday") {
-        $("#mnf").append($matchup);
-      } else if (moment(matchup.startTime).format("h:mm") === "1:00") {
-        $("#afternoon-games").append($matchup)
-      } else if (moment(matchup.startTime).format("h:mm") === "4:05" || moment(matchup.startTime).format("h:mm") === "4:25") {
-        $("#late-afternoon-games").append($matchup)
-      } else {
-        $("#snf").append($matchup)
-      }
+   </div>`
+  
+  
+        if (moment(matchup.startTime).format("dddd") === "Thursday") {
+          $("#tnf").append($matchup);
+        } else if (moment(matchup.startTime).format("dddd") === "Monday") {
+          $("#mnf").append($matchup);
+        } else if (moment(matchup.startTime).format("h:mm") === "1:00") {
+          $("#afternoon-games").append($matchup)
+        } else if (moment(matchup.startTime).format("h:mm") === "4:05" || moment(matchup.startTime).format("h:mm") === "4:25") {
+          $("#late-afternoon-games").append($matchup)
+        } else {
+          $("#snf").append($matchup)
+        }
+      })
+  
+  
+  
+  
     })
-
-
-
-
-  })
+  }
 
 
 })();
-
 
 
 
