@@ -18,18 +18,9 @@ module.exports = function(sequelize, DataTypes) {
   });
   
   Reply.associate = function(models) {
-    Reply.belongsToMany(models.User, {
-      forgeinKet: {
-        allowNull: false
-      }
-    });
-
-    Reply.belongsToMany(models.Post, {
-      forgeinKet: {
-        allowNull: false
-      }
-    });
-
+    Reply.belongsToMany(models.User, 
+  {through:  "Post-Replies"},
+  {forgeinKey: {allowNull: false}});
 
   };
   

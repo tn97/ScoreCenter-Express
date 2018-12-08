@@ -623,9 +623,7 @@ label {
  color: var(--primary-color);
 }
 
-.active {
-  border-bottom: 2px solid var(--primary-color);
-}
+
 
 
 .article-pic-left {

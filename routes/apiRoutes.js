@@ -33,7 +33,6 @@ router.post("/signup", function (req, res) {
               .status(422)
               .json(err);
           }
-          console.log(req.user);
           return res.json("/home");
         });
     })
