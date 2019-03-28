@@ -1,30 +1,23 @@
-// Requiring necessary npm packages
-
+const PORT = process.env.PORT || 3000;
+const db = require("./models");
+const express = require("express");
+const path = require("path");
+const app = express();
 const session = require("express-session");
-// Requiring passport as we've configured it
 const passport = require("./config/passport");
 const fs = require("fs");
+const $ = require('jquery');
 
-var $ = require('jquery');
-// var dt      = require( 'datatables.net' )();
-// var buttons = require( 'datatables.net-buttons' )();
 const NewsApi = require('newsapi');
-const newsapi = new NewsApi("4064b95643d24a48a9b28a7ad95f81e4")
-var MySportsFeeds = require("mysportsfeeds-node");
-var msf = new MySportsFeeds("2.0", true);
+const newsapi = new NewsApi("4064b95643d24a48a9b28a7ad95f81e4");
+
+const MySportsFeeds = require("mysportsfeeds-node");
+const msf = new MySportsFeeds("2.0", true);
 msf.authenticate("3c05ee98-ad49-4e16-b24e-46c9b5", "MYSPORTSFEEDS");
-var data = msf.getData('nfl', '2018-2019-regular', 'players', 'json', { sort: "player.position" }, { rosterstatus: 'assigned-to-roster' });
+var data = msf.getData('nfl', '2018-2019-regular', 'players', 'json', { sort: "player.position", rosterstatus: 'assigned-to-roster', force: "true" });
 var data = msf.getData('nfl', '2018-2019-regular', 'weekly_games', 'json', { week: "14", sort: "game.starttime", rosterstatus: "assigned-to-roster", force: "true" });
 var data = msf.getData('nfl', '2018-2019-regular', 'seasonal_standings', 'json', { force: "true" });
 
-const PORT = process.env.PORT || 3000;
-
-const express = require("express");
-var path = require("path");
-
-var app = express();
-
-const db = require("./models");
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "./public")));
@@ -33,11 +26,17 @@ app.use(session({ secret: "keyboard cat", resave: true, saveUninitialized: true 
 app.use(passport.initialize());
 app.use(passport.session());
 
+
+
+
+
 app.get("/team/:team", function (req, res) {
   res.sendFile(path.join(__dirname, "./public/team.html"));
 });
 
 app.get("/api/news/:team", function (req, res) {
+
+  ("********************************************************************************************************************************************************************************************************************************************************************************")
   if (req.params.team === "all") {
     console.log("REALLY?!")
     newsapi.v2.topHeadlines({
@@ -47,6 +46,7 @@ app.get("/api/news/:team", function (req, res) {
       language: 'en'
     }).then((response, err) => {
       if (err) throw err;
+      ("********************************************************************************************************************************************************************************************************************************************************************************")
       res.json(response)
     });
   } else {
@@ -56,6 +56,8 @@ app.get("/api/news/:team", function (req, res) {
       sortBy: 'relevance',
       language: 'en'
     }).then((response, err) => {
+      console.log("********************************************************************************************************************************************************************************************************************************************************************************")
+
       if (err) throw err;
       res.json(response)
     });
@@ -63,6 +65,7 @@ app.get("/api/news/:team", function (req, res) {
 })
 
 app.get("/api/divisions", function (req, res) {
+  console.log("***********************")
   fs.readFile('results/seasonal_standings-nfl-2018-2019-regular.json', 'utf8', function (err, data) {
 
     if (err) throw err;
@@ -204,8 +207,3 @@ db.sequelize.sync({ force: false }).then(() => {
   });
 });
 
-
-
-  // app.listen(PORT, function () {
-  //   console.log("App listening on PORT: " + PORT);
-  // });

@@ -1,6 +1,6 @@
 const url = location.href.split("/");
-console.log(url)
-const team = url[url.length - 1]
+const team = url[url.length-1];
+console.log(team)
 const root = document.querySelector(':root');
 let currentTeamData = {}
 const teamData = [
@@ -669,7 +669,6 @@ const getMatchups = () => {
 
       }
 
-
       let $matchup = `<div class='matchup mb-2'>
     <div class='matchup-row'>
      <div class='awayTeam'>
@@ -678,7 +677,7 @@ const getMatchups = () => {
       </div>
       <div class='team mb-2'>
        <div class='team-logo mx-auto'>
-        <img class='matchup-logo' src='./photos/${awayTeam.teamNameLower}.gif'>
+        <img class='matchup-logo' src='/photos/${awayTeam.teamNameLower}.gif'>
        </div>
       </div>
       <div class='teamName mb-1'>
@@ -695,7 +694,7 @@ const getMatchups = () => {
       </div>
       <div class='team mb-2'>
        <div class='team-logo mx-auto'>
-        <img class='matchup-logo' src='./photos/${homeTeam.teamNameLower}.gif'>
+        <img class='matchup-logo' src='/photos/${homeTeam.teamNameLower}.gif'>
        </div>
       </div>
       <div class='teamName mb-1'>
@@ -822,7 +821,7 @@ const getHomeNews = () => {
 }
 
 const setTeamPage = () => {
-
+console.log(team)
   if (team !== "home") {
 
     teamData.forEach((squad, i) => {
@@ -843,6 +842,9 @@ const setTeamPage = () => {
     const niners = team === "niners" ? "49ERS" : team.toUpperCase()
     $("#teamName").text(niners)
 
+    
+    console.log("********************************************************************************************************************************************************************************************************************************************************************************");    
+    
     $.ajax({
       url: "/api/news/" + currentTeamData.teamLowerFull,
       method: "GET"
@@ -883,3 +885,4 @@ setTeamPage();
 getMatchups();
 
 
+console.log(teamData)
